@@ -1,0 +1,25 @@
+import mysql.connector
+import pandas as pd
+
+#creds = ["username","password","juliehaegh","ninG20&19rea","3306"] 
+creds = ["juliehaegh","ninG20&19rea","172.20.20.4","hgo",3306]
+
+#Connection to the database
+host = creds[2]
+user = creds[0]
+password = creds[1]
+database = creds[3]
+port = creds[4]
+mydb = mysql.connector.connect(host=host, user=user, database=database, port=port, password=password, auth_plugin='mysql_native_password')
+mycursor = mydb.cursor()
+
+#Safecheck to guarantee that the connection worked
+mycursor.execute('SHOW TABLES;')
+print(f"Tables: {mycursor.fetchall()}")
+print(mydb.connection_id) #it'll give connection_id,if got connected
+
+alertP1 = pd.read_sql("""SELECT * FROM ConsultaUrgencia_doentespedidosconsultaNeurologia2012""",mydb)
+alertP1.head()
+
+alertP2 = pd.read_sql("""SELECT * FROM consultaneurologia201216anon_true""",mydb)
+alertP2.head()
