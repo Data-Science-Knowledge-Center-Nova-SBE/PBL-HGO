@@ -2,7 +2,7 @@ import mysql.connector
 import pandas as pd
 
 #creds = ["username","password","juliehaegh","ninG20&19rea","3306"] 
-creds = ["juliehaegh","ninG20&19rea","172.20.20.4","hgo",3306]
+creds = ["username","password","172.20.20.4","hgo",3306]
 
 #Connection to the database
 host = creds[2]
