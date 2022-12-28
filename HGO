@@ -23,3 +23,36 @@ alertP1.head()
 
 SClinico = pd.read_sql("""SELECT * FROM consultaneurologia201216anon_true""",mydb)
 SClinico.head()
+
+# Introduction to Word Cloud/Tag Clouds
+#Word Cloud is a visualization technique for texts that are natively used for visualizing the tags or keywords from a text. These words are clustered together to form a Word Cloud.
+
+#Each word in this cloud has a variabl font size and color tone. Thus, this representatin helps to determine words of prominence. A bigger font size of a word portrays its prominance more relative to other words in the cluster. 
+
+# Import librariers 
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
+
+# Create a text variable
+text = " ".join(cat for cat in alertP2.Texto)
+
+# Generate word cloud
+word_cloud = WordCloud(
+    width=1000,
+    height=500,
+    random_state=1,
+    background_color='black',
+    colormap='Set2',
+    collocations=False,
+    stopwords=STOPWORDS,
+).generate(text)
+
+# Display the generated word cloud
+plt.imshow(word_cloud)
+plt.axis('off')
+plt.show() # Show Cloud
+
+from collections import Counter
+
+# Top 100 most frequent words
+Counter(" ".join(alertP2["Texto"]).split()).most_common(150)
