@@ -21,5 +21,5 @@ print(mydb.connection_id) #it'll give connection_id,if got connected
 alertP1 = pd.read_sql("""SELECT * FROM ConsultaUrgencia_doentespedidosconsultaNeurologia2012""",mydb)
 alertP1.head()
 
-alertP2 = pd.read_sql("""SELECT * FROM consultaneurologia201216anon_true""",mydb)
-alertP2.head()
+SClinico = pd.read_sql("""SELECT * FROM consultaneurologia201216anon_true""",mydb)
+SClinico.head()
