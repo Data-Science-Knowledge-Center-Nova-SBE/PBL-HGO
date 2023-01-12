@@ -65,4 +65,5 @@ result = pd.DataFrame([[]])
 for col in texto:
     result[col] = texto[col].apply(len).mean()
 
-result
+# Add a new column with the word count
+SClinic['word_count'] = SClinic['Texto'].apply(lambda x: len(x.split()))
