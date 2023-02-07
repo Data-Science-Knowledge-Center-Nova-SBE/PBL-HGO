@@ -132,3 +132,35 @@ plt.ylabel('Accepted Referrals')
 plt.title('Rate of Accepted Refrerrals in Each Age Range')
 plt.legend() # Show the legend
 plt.show()
+
+# Moving averages
+
+from collections import deque
+
+fig = plt.figure()
+fig.set_size_inches(19, 10)
+
+def moving_average(accepted_cases, window_size):
+    window = deque(maxlen=window_size)
+    moving_averages = []
+    total_cases = 0
+    for case in accepted_cases:
+        if case == 'Accepted':
+            window.append(1)
+            total_cases += 1
+        else:
+            window.append(0)
+        if len(window) == window_size:
+            moving_averages.append(sum(window) / window_size)
+    return moving_averages
+
+accepted_cases = SClinic['result']
+window_size = 74
+
+moving_averages = moving_average(accepted_cases, window_size)
+
+plt.plot(moving_averages)
+plt.title('Moving Average of Acceptance Rate (24 months)')
+plt.xlabel('Months')
+plt.ylabel('Acceptance Rate')
+plt.show()
