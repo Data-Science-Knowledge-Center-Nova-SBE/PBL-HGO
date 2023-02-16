@@ -1,0 +1,197 @@
+# Import librariers 
+import matplotlib.pyplot as plt
+import numpy as np
+from wordcloud import WordCloud, STOPWORDS
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from unidecode import unidecode
+import re
+from collections import Counter
+import nltk
+from nltk.corpus import stopwords
+
+# Remove all names in Texto variable
+# This function uses a regular expression to find all words in the text that start with a 
+# capital letter (\b[A-Z][a-z]+\b), which are assumed to be names
+text = SClinic['Texto'] 
+
+def remove_names(text):
+    # Find all words that start with a capital letter
+    names = re.findall(r'\b[A-Z][a-z]+\b', text)
+    
+    # Replace the names with an empty string
+    for name in names:
+        text = text.replace(name, '')
+        
+    return text
+# Create an empty list to store the text
+text_list = []
+
+# Loop through the 'text' column
+for text in text.str.lower(): # Transform every word to lower case
+    text_list.append(text)
+
+# Print the list of text
+print(text_list)
+
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+# Download the Portuguese stop words
+nltk.download('stopwords')
+nltk.download('punkt')
+
+# Get the Portuguese stop words
+stop_words = set(stopwords.words('portuguese'))
+stop_words.update(['.', ',','(',')',':','-','?','+','/',';','drª','``','','desde','doente','consulta','alterações','se',"''",'cerca','refere','hgo','utente','vossa','s','...','ainda','c','filha','costa','dr.','pereira','ja','--','p','dr','h','n','>','q','//','..','b','++','%'])
+
+# Create a new list to store the filtered text
+filtered_text = []
+
+# Loop through the text_list and remove the stop words
+for text in text_list:
+    words = word_tokenize(text)
+    words = [word for word in words if word.lower() not in stop_words]
+    filtered_text.append(" ".join(words))
+
+# Print the filtered text
+print(filtered_text)
+
+# Save the filtered text as a new column to the dataframe
+SClinic['filtered_text'] = filtered_text
+
+
+#triage and post triage
+refused=SClinic[SClinic['COD_MOTIVO_RECUSA']>0]
+refused_number=refused.shape[0]
+​
+triage_negative=refused[refused['COD_MOTIVO_RECUSA'].isin ([1,2,3,6,7,10,16,18,19,50,51,52,54])]
+triage_negative_number=triage_negative.shape[0]
+triage_positive_number=refused_number-triage_negative_number
+​
+post_triage_negative=refused[refused['COD_MOTIVO_RECUSA'].isin ([14,15,20,53])]
+post_triage_negative_number=post_triage_negative.shape[0]
+post_triage_positive_number=triage_positive_number-post_triage_negative_number
+​
+triage= pd.DataFrame({'triage outcome':['Negative','Positive'], 'percentage from refused referrals': [round(100*(triage_negative_number/refused_number)),round(100*(triage_positive_number/refused_number))]})
+post_triage= pd.DataFrame({'post triage outcome':['Negative','Positive'], 'percentage from positive triage outcome': [round(100*(post_triage_negative_number/triage_positive_number)),round(100*(post_triage_positive_number/triage_positive_number))]})
+​
+SClinic['result'] = ['Accepted' if x in [0,14,25,20,53,8,12,12] else 'Refused' for x in SClinic['COD_MOTIVO_RECUSA']]
+
+# Create a boolean mask to identify rows containing the words "anos" and "idade" in the "Texto" column
+mask2 = SClinic['filtered_text'].str.contains('anos') & SClinic['filtered_text'].str.contains('idade')
+
+# Use the boolean mask to extract all the rows that contain the desired words
+extracted_rows2 = SClinic[mask2]
+
+# Save the extracted rows as a new data frame
+number_years_df = extracted_rows2.copy()
+
+# Extract the numbers before "anos" and save it as a new column "Age"
+number_years_df['Age'] = number_years_df['Texto'].str.extract(r'(\d+) anos')
+
+# Convert the "Age" column from string to integer, converting non-numeric values to NaN
+number_years_df['Age'] = pd.to_numeric(number_years_df['Age'], errors='coerce')
+
+# Drop the rows with NaN values in the "Age" column
+number_years_df = number_years_df.dropna(subset=['Age'])
+
+number_years_df[['filtered_text','Age','result']]
+
+# Create a new column with age range
+number_years_df['Age_range'] = number_years_df['Age'].apply(lambda x: '1-20' if (20 > x >= 1) else '20-40' if (40 > x > 20) else '40-60' if (60 > x > 40) else '60-80' if (80 > x > 60) else '80-100' if (100 > x > 80) else '100>' if (100 > x) else '0')
+
+number_years_df[['filtered_text','Age_range','result']]
+
+# Group the data by age range and accepted/rejected
+accepted_rejected_counts = number_years_df.groupby(['Age_range', 'result']).size().reset_index(name='counts').sort_values(by = 'Age_range')
+
+# Print result
+accepted_rejected_counts
+
+x = ['1-20','20-40','40-60','60-80','80-100','100>']
+
+# Percentage rate
+y1 = [74,77,69,78,78,87]
+
+fig = plt.figure()
+fig.set_size_inches(19, 10)
+
+ax = plt.gca()
+ax.set_ylim([0, 100])
+
+# Plotting two lines on the same graph
+plt.plot(x, y1, label='Acceptence Rate')
+
+plt.xlabel('Age Range')
+plt.ylabel('Accepted Referrals')
+plt.title('Rate of Accepted Refrerrals in Each Age Range')
+plt.legend() # Show the legend
+plt.show()
+
+# Moving averages
+
+from collections import deque
+
+fig = plt.figure()
+fig.set_size_inches(19, 10)
+
+def moving_average(accepted_cases, window_size):
+    window = deque(maxlen=window_size)
+    moving_averages = []
+    total_cases = 0
+    for case in accepted_cases:
+        if case == 'Accepted':
+            window.append(1)
+            total_cases += 1
+        else:
+            window.append(0)
+        if len(window) == window_size:
+            moving_averages.append(sum(window) / window_size)
+    return moving_averages
+
+accepted_cases = SClinic['result']
+window_size = 74
+
+moving_averages = moving_average(accepted_cases, window_size)
+
+plt.plot(moving_averages)
+plt.title('Moving Average of Acceptance Rate (24 months)')
+plt.xlabel('Months')
+plt.ylabel('Acceptance Rate')
+plt.show()
+
+# Import excel file with medications
+medications = pd.read_excel('allPackages.xls')
+medications['Nome do medicamento'].count()
+
+medications = medications.groupby(['Nome do medicamento']).size().reset_index(name='counts').sort_values(by = 'counts')
+medications = pd.DataFrame(medications)
+medications
+
+def extract_columns(SClinic, word_list):
+    
+    # Create a column containing all words in the dataframe
+    #SClinic['all_words'] = SClinic.apply(lambda x: ' '.join(x.astype(str)), axis=1)
+    
+    # Create a boolean mask indicating whether each word is in the list
+    #mask = SClinic['all_words'].apply(lambda x: any(word in x for word in word_list))
+    
+    mask = SClinic['Texto'].apply(lambda x: any(word in x for word in word_list))
+    
+    # Return the columns where the word is found
+    return SClinic.loc[mask, :]
+
+#word_list = medications.groupby(['Nome do medicamento']).size()
+word_list = medications['Nome do medicamento']
+
+result = extract_columns(SClinic, word_list)
+result[['Texto','result']] 
+
+a = result.groupby(['result']).size()
+a = pd.DataFrame(a).reset_index()
+a
