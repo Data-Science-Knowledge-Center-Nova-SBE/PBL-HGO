@@ -56,3 +56,14 @@ from collections import Counter
 
 # Top 100 most frequent words
 Counter(" ".join(alertP2["Texto"]).split()).most_common(150)
+
+texto = SClinic['Texto']
+texto = pd.DataFrame(texto)
+
+# Average text length in Texto variable
+result = pd.DataFrame([[]])
+for col in texto:
+    result[col] = texto[col].apply(len).mean()
+
+# Add a new column with the word count
+SClinic['word_count'] = SClinic['Texto'].apply(lambda x: len(x.split()))
