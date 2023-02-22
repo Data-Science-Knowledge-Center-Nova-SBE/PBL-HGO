@@ -1,6 +1,6 @@
 #Text strings changes
 
-def remove_names(text):
+def remove_names(string):
     import re
     # Find all words that start with a capital letter
     names = re.findall(r'\b[A-Z][a-z]+\b', text)
@@ -11,13 +11,13 @@ def remove_names(text):
         
     return text
 
-def text_list(text):
+def text_list(df):
 
     # Create an empty list to store the text
     text_list = []
 
     # Loop through the 'text' column
-    for text in text.str.lower(): # Transform every word to lower case
+    for text in df.str.lower(): # Transform every word to lower case
         text_list.append(text)
 
     return text_list
