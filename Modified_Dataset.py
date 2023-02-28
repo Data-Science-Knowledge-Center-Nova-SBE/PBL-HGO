@@ -38,6 +38,10 @@ replace_blank(alertP1)
 
 #NLP
 remove_stop_words(alertP1, "Texto", "clean_text")
-spacy_lemmatizer2(alertP1, "clean_text", "clean_text")
+spacy_lemmatizer(alertP1, "clean_text", "clean_text")
+disease_class(alertP1, "clean_text")
 
-print(alertP1["clean_text"].head())
+print(alertP1.head())
+
+#Save the new, clean and ready to slay CSV
+alertP1.to_csv("/Users/miguelcosta/Downloads/modified_dataset.csv", index=False)
