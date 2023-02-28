@@ -1,8 +1,9 @@
-def structured_data_dummies(alertP1):
-    area = pd.get_dummies(alertP1['area'],drop_first=True)
-    PROVENIENCIA = pd.get_dummies(alertP1['PROVENIENCIA'],drop_first=True)
-    speciality_type = pd.get_dummies(alertP1['speciality_type'],drop_first=True)
-    alertP1.drop(['area','PROVENIENCIA','speciality_type'],axis=1,inplace=True)
-    alertP1 = pd.concat([data,area,PROVENIENCIA,speciality_type],axis=1)
-    
-    return alertP1
+def structured_data_dummies(data):
+    area = pd.get_dummies(data['area'],drop_first=True)
+    Provenance = pd.get_dummies(data['PROVENIENCIA'],drop_first=True)
+    speciality_type = pd.get_dummies(data['speciality_type'],drop_first=True)
+    step= pd.get_dummies(data['step'],drop_first=True)
+    unit= pd.get_dummies(data['unit'],drop_first=True)
+    data.drop(['area','PROVENIENCIA','speciality_type','step','unit'],axis=1,inplace=True)
+    data = pd.concat([data,area,Provenance,speciality_type,step,unit],axis=1)
+    return data
