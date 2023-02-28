@@ -1,3 +1,5 @@
+import pandas as pd
+
 #Text strings changes
 
 def remove_names(string):
@@ -11,16 +13,69 @@ def remove_names(string):
         
     return text
 
-def text_list(df):
+def lower_text(df, column):
 
-    # Create an empty list to store the text
+    df = df[column].str.lower()
+
+    """# Create an empty list to store the text
     text_list = []
 
     # Loop through the 'text' column
     for text in df.str.lower(): # Transform every word to lower case
-        text_list.append(text)
+        text_list.append(text)"""
 
-    return text_list
+    return df
+
+def remove_stop_words(df, original_column, new_column):
+
+    import nltk
+    from nltk.corpus import stopwords
+    from nltk.tokenize import word_tokenize
+
+    # Download the Portuguese stop words
+    nltk.download('stopwords')
+    nltk.download('punkt')
+
+    # Lower Case strings
+    df[new_column] = df[original_column].str.lower()
+
+    # Get the Portuguese stop words
+    stop_words = set(stopwords.words('portuguese'))
+    stop_words.update(['.', ',','(',')',':','-','?','+','/',';','drª','``','','se',"''",'cerca','refere','hgo','utente','vossa','s','...','ainda','c','filha','costa','dr.','pereira','ja','--','p','dr','h','n','>','q','//','..','b','++','%'])
+    ###### I THINK WE SHOULD REMOVE ALETRAÇOES FROM THIS LIST#########
+
+    # Create a new list to store the filtered text
+    filtered_text = []
+
+    # Loop through the text_list and remove the stop words
+    for text in df[new_column]:
+        words = word_tokenize(text)
+        words = [word for word in words if word.lower() not in stop_words]
+        filtered_text.append(" ".join(words))
+    
+    df[new_column] = filtered_text
+
+    return df
+
+def spacy_lemmatizer2(df, original_column, new_column):
+    # Spacy is required
+    # $pip install -U spacy
+    # $python -m spacy download pt_core_news_md
+    # Additional information: https://spacy.io/usage
+    
+    import spacy
+    import pt_core_news_md
+    nlp = pt_core_news_md.load()
+
+    doclist = list(nlp.pipe(df[original_column]))
+
+    text_list=[]
+    for i, doc in enumerate(doclist):
+        text_list.append(' '.join([listitem.lemma_ for listitem in doc]))
+    
+    df[new_column] = text_list
+
+    return df
 
 def spacy_lemmatizer(text_list):
     # Spacy is required
@@ -40,36 +95,16 @@ def spacy_lemmatizer(text_list):
         
     return text_list
 
-def remove_stop_words(text_list):
-
-    import nltk
-    from nltk.corpus import stopwords
-    from nltk.tokenize import word_tokenize
-
-    # Download the Portuguese stop words
-    nltk.download('stopwords')
-    nltk.download('punkt')
-
-    # Get the Portuguese stop words
-    stop_words = set(stopwords.words('portuguese'))
-    stop_words.update(['.', ',','(',')',':','-','?','+','/',';','drª','``','','desde','doente','consulta','alterações','se',"''",'cerca','refere','hgo','utente','vossa','s','...','ainda','c','filha','costa','dr.','pereira','ja','--','p','dr','h','n','>','q','//','..','b','++','%'])
-    ###### I THINK WE SHOULD REMOVE ALETRAÇOES FROM THIS LIST#########
-
-    # Create a new list to store the filtered text
-    filtered_text = []
-
-    # Loop through the text_list and remove the stop words
-    for text in text_list:
-        words = word_tokenize(text)
-        words = [word for word in words if word.lower() not in stop_words]
-        filtered_text.append(" ".join(words))
-    
-    return filtered_text
-
 # Dataframe changes 
 
+def disease_class(df, column):
+    list = ["cefaleia","demência","convulsão", "epilepsia", "sincope", "vertigem", "tremor", "acidente vascular cerebral"]
+    for d in list:
+        df[d] = df[column].str.contains(d)
+    return df
+
+
 def age_text(df, column):
-    import pandas as pd
     
     #This should be applied to the filtered text column of the dataset
     
