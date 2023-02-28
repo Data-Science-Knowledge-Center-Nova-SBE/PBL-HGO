@@ -57,7 +57,7 @@ def remove_stop_words(df, original_column, new_column):
 
     return df
 
-def spacy_lemmatizer2(df, original_column, new_column):
+def spacy_lemmatizer(df, original_column, new_column):
     # Spacy is required
     # $pip install -U spacy
     # $python -m spacy download pt_core_news_md
@@ -76,24 +76,6 @@ def spacy_lemmatizer2(df, original_column, new_column):
     df[new_column] = text_list
 
     return df
-
-def spacy_lemmatizer(text_list):
-    # Spacy is required
-    # $pip install -U spacy
-    # $python -m spacy download pt_core_news_md
-    # Additional information: https://spacy.io/usage
-    
-    import spacy
-    import pt_core_news_md
-    nlp = pt_core_news_md.load()
-
-    doclist = list(nlp.pipe(text_list))
-
-    text_list=[]
-    for i, doc in enumerate(doclist):
-        text_list.append(' '.join([listitem.lemma_ for listitem in doc]))
-        
-    return text_list
 
 # Dataframe changes 
 
