@@ -44,4 +44,4 @@ disease_class(alertP1, "clean_text")
 print(alertP1.head())
 
 #Save the new, clean and ready to slay CSV
-alertP1.to_csv("/Users/miguelcosta/Downloads/modified_dataset.csv", index=False)
+load_data("modified_dataset.csv",alertP1)
