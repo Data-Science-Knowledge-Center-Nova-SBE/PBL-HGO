@@ -8,7 +8,7 @@ def class_area(alertP1):
 
 
 #compute length of text
-def text_lenght(alertP1):
+def text_length(alertP1):
     alertP1['text_length']=alertP1['Texto'].str.len()
     return alertP1
 
