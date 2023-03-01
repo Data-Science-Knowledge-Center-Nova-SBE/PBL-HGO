@@ -1,6 +1,6 @@
-def date_format_alertP1(alertP1):
-    import pandas as pd
+import pandas as pd
 
+def date_format_alertP1(alertP1):
     alertP1["DATA_ENVIO"] = pd.to_datetime(alertP1["DATA_ENVIO"],dayfirst=True, yearfirst=False )
     alertP1["DATA_RECEPCAO"] = pd.to_datetime(alertP1["DATA_RECEPCAO"],dayfirst=True, yearfirst=False)
     alertP1["DATA_RETORNO"] = pd.to_datetime(alertP1[alertP1["DATA_RETORNO"]!='26/06/0214']["DATA_RETORNO"],dayfirst=True, yearfirst=False)
@@ -9,11 +9,15 @@ def date_format_alertP1(alertP1):
     return alertP1
 
 def replace_blank(alertP1):
-    import pandas as pd
-    
     alertP1['PROVENIENCIA'][alertP1['PROVENIENCIA']=='']='unknown'
     alertP1['CTH_PRIOR'][alertP1['CTH_PRIOR']=='']='unknown'
     return alertP1
+
+def result(alertP1):
+    alertP1['result']=['1' if x in [0,14,15,53,8,12,13] else '0' if x in [1,6,10,7] else '' for x in alertP1['COD_MOTIVO_RECUSA'] ]
+    alertP1=alertP1[alertP1['result']!='']
+    return(alertP1)
+     
 
 def load_data(filename, df):
         """
