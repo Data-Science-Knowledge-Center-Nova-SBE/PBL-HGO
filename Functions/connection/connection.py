@@ -2,6 +2,15 @@ import mysql.connector
 import pandas as pd
 #Connection to the database
 def connection(creds):
+   """
+   File must follow this structure:
+   "username"
+   "password"
+   "host"
+   "database"
+   port
+   """
+   creds = pd.read_csv("credentials.txt", sep=" ", header=None, names=["Value"])
    host = creds['value'][0]
    user = creds['value'][1]
    password = creds['value'][2]
