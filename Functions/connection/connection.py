@@ -12,7 +12,7 @@ def connection(creds_path):
    "database"
    port
    """
-   creds = pd.read_csv(creds_path, sep=",", header=None, names=["Value"])
+   creds = pd.read_csv(creds_path, sep=",", header=None, names=["value"])
    host = creds['value'][1]
    user = creds['value'][2]
    password = creds['value'][3]
