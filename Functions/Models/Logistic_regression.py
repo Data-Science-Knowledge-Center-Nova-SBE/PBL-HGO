@@ -13,7 +13,7 @@ from sklearn.metrics import classification_report
 #logistic regression 
 def log_regression(features,target):
     # split X and y into training and testing sets
-    X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2,random_state=16)
+    X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2,random_state=16,shuffle=False)
     # instantiate the model (using the default parameters)
     logreg = LogisticRegression(random_state=16)
     # fit the model with data
