@@ -51,7 +51,7 @@ def load_data(filename, df):
             print(
                 f"Data file '{filename}' already exists in '{download_dir}' directory."
             )
-            self.data = pd.read_csv(file_path)  # pylint: disable=W0201
+            df = pd.read_csv(file_path)  # pylint: disable=W0201
         else:
             # save file to download directory
             with open(file_path, "wb") as save:
