@@ -6,6 +6,8 @@ def date_format_alertP1(alertP1):
     alertP1["DATA_RETORNO"] = pd.to_datetime(alertP1[alertP1["DATA_RETORNO"]!='26/06/0214']["DATA_RETORNO"],dayfirst=True, yearfirst=False)
     alertP1["DATA_REALIZACAO"] = pd.to_datetime(alertP1["DATA_REALIZACAO"],dayfirst=True, yearfirst=False)
     alertP1["DATA_MARCACAO"] = pd.to_datetime(alertP1["DATA_MARCACAO"],dayfirst=True, yearfirst=False)
+    alertP1["trata data recusa"] = pd.to_datetime(alertP1[alertP1["trata data recusa"]!='26/06/0214']["trata data recusa"],dayfirst=True, yearfirst=False)
+
     return alertP1
 
 def replace_blank(alertP1):
@@ -13,8 +15,9 @@ def replace_blank(alertP1):
     alertP1['CTH_PRIOR'][alertP1['CTH_PRIOR']=='']='unknown'
     return alertP1
 
+
 def result(alertP1):
-    alertP1['result']=['1' if x in [0,14,15,53,8,12,13] else '0' if x in [1,6,10,7] else '' for x in alertP1['COD_MOTIVO_RECUSA'] ]
+    alertP1['result']=['1' if x in [0,14,15,53,8,12,13] else '0' if x in [1,6,10,7,2] else '' for x in alertP1['COD_MOTIVO_RECUSA'] ]
     alertP1=alertP1[alertP1['result']!='']
     return(alertP1)
      

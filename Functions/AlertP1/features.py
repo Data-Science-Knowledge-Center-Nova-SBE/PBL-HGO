@@ -5,8 +5,10 @@ def class_area(alertP1):
     alertP1['area']=['inside area' if x in area_list else 'outside area' for x in alertP1['COD_UNID_SAUDE_PROV'] ]
     return alertP1
 
-
-
+#speciality 
+def speciality(alertP1):
+    alertP1['speciality_type'] = ['General Neurology' if x == 'NEUROLOGIA' else 'Other specialities'  for x in alertP1['DES_ESPECIALIDADE']]
+    return(alertP1)
 #compute length of text
 def text_length(alertP1):
     alertP1['text_length']=alertP1['Texto'].str.len()
