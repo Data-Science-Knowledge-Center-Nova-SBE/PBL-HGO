@@ -145,14 +145,17 @@ def categorize_medication(df, column, medications_excel, threshold=80):
     from fuzzywuzzy import process
     import re
 
-    medications_df = pd.read_excel('excel_file', skiprows= 1)
-    
+    medications_df = pd.read_excel(medications_excel,header= 0)
+
     for i, text in df[column].iteritems():
+        words = text.split()
         for index, row in medications_df.iterrows():
-            medication_name = row[0]
+            medication_name = row["name"]
             medication_level = 'medication_level_' + str(row['level'])
-            ratio = fuzz.token_set_ratio(medication_name, text)
-            if ratio >= threshold:
-                text = re.sub(r'\b' + medication_name + r'\b', medication_level, text)
+            for word in words:
+                ratio = fuzz.ratio(medication_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b', medication_level, text, 0)
         df.at[i, column] = text
+
     return df
