@@ -117,7 +117,7 @@ def medications_text(df, excel_file):
     import pandas as pd
 
     # Import excel file with medications
-    medications = pd.read_excel('allPackages.xls')
+    medications = pd.read_excel('excel_file')
     medications['Nome do medicamento'].count()
     medications = medications.groupby(['Nome do medicamento']).size().reset_index(name='counts').sort_values(by = 'counts')
     medications = pd.DataFrame(medications)
@@ -135,3 +135,24 @@ def medications_text(df, excel_file):
     
     result = df.loc[mask, :]
     
+def categorize_medication(df, column, medications_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = Drug Name and [1] = Level
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    medications_df = pd.read_excel('excel_file', skiprows= 1)
+    
+    for i, text in df[column].iteritems():
+        for index, row in medications_df.iterrows():
+            medication_name = row[0]
+            medication_level = 'medication_level_' + str(row['level'])
+            ratio = fuzz.token_set_ratio(medication_name, text)
+            if ratio >= threshold:
+                text = re.sub(r'\b' + medication_name + r'\b', medication_level, text)
+        df.at[i, column] = text
+    return df
