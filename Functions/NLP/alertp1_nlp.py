@@ -148,14 +148,24 @@ def categorize_medication(df, column, medications_excel, threshold=80):
     medications_df = pd.read_excel(medications_excel,header= 0)
 
     for i, text in df[column].iteritems():
-        words = text.split()
+        words = re.findall(r'\b\w+\b', text)
         for index, row in medications_df.iterrows():
             medication_name = row["name"]
             medication_level = 'medication_level_' + str(row['level'])
             for word in words:
                 ratio = fuzz.ratio(medication_name, word)
-                if ratio >= threshold:
-                    text = re.sub(r'\b' + word + r'\b', medication_level, text, 0)
+                if ratio >= n:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', medication_level, text)
         df.at[i, column] = text
 
     return df
+
+def get_word_list (df, column):
+    
+    from collections import Counter
+    words = df[column].str.split(expand=True).stack()
+    word_counts = Counter(words)
+    word_counts_df = pd.DataFrame.from_dict(word_counts, orient='index', columns=['count']).reset_index().rename(columns={'index': 'word'})
+    word_counts_df = word_counts_df.sort_values(by='count', ascending=False)
+
+    return word_counts_df
