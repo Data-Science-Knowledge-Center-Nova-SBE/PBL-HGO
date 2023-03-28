@@ -154,7 +154,7 @@ def categorize_medication(df, column, medications_excel, threshold=80):
             medication_level = 'medication_level_' + str(row['level'])
             for word in words:
                 ratio = fuzz.ratio(medication_name, word)
-                if ratio >= n:
+                if ratio >= threshold:
                     text = re.sub(r'\b' + word + r'\b(?![\w])', medication_level, text)
         df.at[i, column] = text
 
@@ -169,3 +169,14 @@ def get_word_list (df, column):
     word_counts_df = word_counts_df.sort_values(by='count', ascending=False)
 
     return word_counts_df
+
+
+def add_textcount_columns(df, text_column, text):
+    # Define a function to count the occurrences of a substring in a string
+    def count_substring(string, substring):
+        return string.count(substring)
+
+    # Create new columns by applying the count_substring function to the Text column
+    df[text] = df[text_column].apply(lambda x: count_substring(x, text))
+
+    return df
