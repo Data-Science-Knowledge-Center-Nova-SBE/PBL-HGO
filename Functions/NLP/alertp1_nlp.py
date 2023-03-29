@@ -19,7 +19,6 @@ def lower_text(df, column):
 
     """# Create an empty list to store the text
     text_list = []
-
     # Loop through the 'text' column
     for text in df.str.lower(): # Transform every word to lower case
         text_list.append(text)"""
@@ -59,8 +58,8 @@ def remove_stop_words(df, original_column, new_column):
 
 def spacy_lemmatizer(df, original_column, new_column):
     # Spacy is required
-    # $pip install -U spacy
-    # $python -m spacy download pt_core_news_md
+    $ pip install -U spacy
+    $ python -m spacy download pt_core_news_md
     # Additional information: https://spacy.io/usage
     
     import spacy
@@ -117,7 +116,7 @@ def medications_text(df, excel_file):
     import pandas as pd
 
     # Import excel file with medications
-    medications = pd.read_excel('allPackages.xls')
+    medications = pd.read_excel('excel_file')
     medications['Nome do medicamento'].count()
     medications = medications.groupby(['Nome do medicamento']).size().reset_index(name='counts').sort_values(by = 'counts')
     medications = pd.DataFrame(medications)
@@ -135,3 +134,48 @@ def medications_text(df, excel_file):
     
     result = df.loc[mask, :]
     
+def categorize_medication(df, column, medications_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = Drug Name and [1] = Level
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    medications_df = pd.read_excel(medications_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in medications_df.iterrows():
+            medication_name = row["name"]
+            medication_level = 'medication_level_' + str(row['level'])
+            for word in words:
+                ratio = fuzz.ratio(medication_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', medication_level, text)
+        df.at[i, column] = text
+
+    return df
+
+def get_word_list (df, column):
+    
+    from collections import Counter
+    words = df[column].str.split(expand=True).stack()
+    word_counts = Counter(words)
+    word_counts_df = pd.DataFrame.from_dict(word_counts, orient='index', columns=['count']).reset_index().rename(columns={'index': 'word'})
+    word_counts_df = word_counts_df.sort_values(by='count', ascending=False)
+
+    return word_counts_df
+
+
+def add_textcount_columns(df, text_column, text):
+    # Define a function to count the occurrences of a substring in a string
+    def count_substring(string, substring):
+        return string.count(substring)
+
+    # Create new columns by applying the count_substring function to the Text column
+    df[text] = df[text_column].apply(lambda x: count_substring(x, text))
+
+    return df
