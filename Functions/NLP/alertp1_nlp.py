@@ -19,6 +19,7 @@ def lower_text(df, column):
 
     """# Create an empty list to store the text
     text_list = []
+
     # Loop through the 'text' column
     for text in df.str.lower(): # Transform every word to lower case
         text_list.append(text)"""
@@ -58,8 +59,8 @@ def remove_stop_words(df, original_column, new_column):
 
 def spacy_lemmatizer(df, original_column, new_column):
     # Spacy is required
-    $ pip install -U spacy
-    $ python -m spacy download pt_core_news_md
+    # $pip install -U spacy
+    # $python -m spacy download pt_core_news_md
     # Additional information: https://spacy.io/usage
     
     import spacy
