@@ -20,6 +20,16 @@ def result(alertP1):
     alertP1['result']=['1' if x in [0,14,15,53,8,12,13] else '0' if x in [1,6,10,7,2] else '' for x in alertP1['COD_MOTIVO_RECUSA'] ]
     alertP1=alertP1[alertP1['result']!='']
     return(alertP1)
+
+def entity_duplicated(alertP1):
+     alertP1['COD_UNID_SAUDE_PROV'][alertP1['COD_UNID_SAUDE_PROV']==3151401]=3151400
+     alertP1['COD_UNID_SAUDE_PROV'][alertP1['COD_UNID_SAUDE_PROV']==3150503]=3150572
+     alertP1['COD_UNID_SAUDE_PROV'][alertP1['COD_UNID_SAUDE_PROV']==3151603]=3151671
+     alertP1['COD_UNID_SAUDE_PROV'][alertP1['COD_UNID_SAUDE_PROV']==3152101]=3152100
+
+     alertP1['PROVENIENCIA'][alertP1['COD_UNID_SAUDE_PROV']==3150371]='CTH'
+
+     return (alertP1) 
      
 
 def load_data(filename, df):
