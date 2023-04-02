@@ -35,6 +35,7 @@ alertP1 = pd.read_sql("""SELECT * FROM consultaneurologia201216anon_true""",mydb
 print("Data Created")
 
 #Data Cleaning
+lower_text(alertP1,"Texto","clean_text")
 date_format_alertP1(alertP1)
 replace_blank(alertP1)
 
@@ -43,7 +44,6 @@ print("Data Cleaned")
 ### NLP ###
 
 #Medications
-alertP1["clean_text"] = alertP1["Texto"].copy()
 categorize_medication(alertP1,"clean_text", "Data/drugs_data_big.xlsx", 75)
 add_textcount_columns(alertP1,"clean_text","medication_level_1")
 add_textcount_columns(alertP1,"clean_text","medication_level_2")
