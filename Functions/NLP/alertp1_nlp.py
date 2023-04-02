@@ -143,7 +143,7 @@ def categorize_medication(df, column, medications_excel, threshold=80):
     for i, text in df[column].iteritems():
         words = re.findall(r'\b\w+\b', text)
         for index, row in medications_df.iterrows():
-            medication_name = row["name"].str.lower()
+            medication_name = row["name"].lower()
             medication_level = 'medication_level_' + str(row['level'])
             for word in words:
                 ratio = fuzz.ratio(medication_name, word)
