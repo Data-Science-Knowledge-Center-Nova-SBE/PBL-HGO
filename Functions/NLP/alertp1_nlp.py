@@ -13,16 +13,9 @@ def remove_names(string):
         
     return text
 
-def lower_text(df, column):
+def lower_text(df, column, new_column):
 
-    df = df[column].str.lower()
-
-    """# Create an empty list to store the text
-    text_list = []
-
-    # Loop through the 'text' column
-    for text in df.str.lower(): # Transform every word to lower case
-        text_list.append(text)"""
+    df[new_column] = df[column].str.lower()
 
     return df
 
