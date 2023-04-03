@@ -44,7 +44,7 @@ print("Data Cleaned")
 ### NLP ###
 
 #Medications
-categorize_medication(alertP1,"clean_text", "Data/drugs_data_big.xlsx", 75)
+categorize_medication(alertP1,"clean_text", "Data/drugs_data_big2.xlsx", 80)
 add_textcount_columns(alertP1,"clean_text","medication_level_1")
 add_textcount_columns(alertP1,"clean_text","medication_level_2")
 add_textcount_columns(alertP1,"clean_text","medication_level_3")
@@ -58,6 +58,6 @@ spacy_lemmatizer(alertP1, "clean_text", "clean_text")
 print(alertP1.head())
 
 #Save the new, clean and ready to slay CSV
-load_data("data_with_meds.csv",alertP1)
+load_data("data_with_meds_aas80.csv",alertP1)
 
 print("Data Saved")
