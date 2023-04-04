@@ -13,16 +13,9 @@ def remove_names(string):
         
     return text
 
-def lower_text(df, column):
+def lower_text(df, column, new_column):
 
-    df = df[column].str.lower()
-
-    """# Create an empty list to store the text
-    text_list = []
-
-    # Loop through the 'text' column
-    for text in df.str.lower(): # Transform every word to lower case
-        text_list.append(text)"""
+    df[new_column] = df[column].str.lower()
 
     return df
 
@@ -150,12 +143,37 @@ def categorize_medication(df, column, medications_excel, threshold=80):
     for i, text in df[column].iteritems():
         words = re.findall(r'\b\w+\b', text)
         for index, row in medications_df.iterrows():
-            medication_name = row["name"]
+            medication_name = row["name"].lower()
             medication_level = 'medication_level_' + str(row['level'])
             for word in words:
                 ratio = fuzz.ratio(medication_name, word)
                 if ratio >= threshold:
                     text = re.sub(r'\b' + word + r'\b(?![\w])', medication_level, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_symptoms(df, column, symptoms_excel, threshold=75):
+    #The file should have a header and follow the structure [0] = symptom and [1] = consultation
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    symptoms_df = pd.read_excel(symptoms_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in symptoms_df.iterrows():
+            symptom_name = row["symptom"].lower()
+            symptom_consultation = 'symptom_' + str(row['consultation'])
+            for word in words:
+                ratio = fuzz.ratio(symptom_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', symptom_consultation, text)
         df.at[i, column] = text
 
     return df
