@@ -31,6 +31,20 @@ def unit(alertP1):
     return alertP1
 
 
+#the code sorts the referrals first for ID and after data _recepçao.
+# the first referral is always 0 even it is accepted or rejected. 
+#If there is a referral acceptad before than all other referrals of that patient is 1
+def bef_accepted(alertP1):
+
+    df_sorted = alertP1.sort_values(['ID_DOENTE', 'DATA_RECEPCAO'])
+    df_sorted["result"]=df_sorted["result"].astype("int")
+    df_sorted.loc[df_sorted['ID_DOENTE'].ne(df_sorted['ID_DOENTE'].shift()), 'before_accepted'] = 0
+    df_sorted['before_accepted'] = df_sorted.groupby('ID_DOENTE')['result'].cumsum().clip(upper=1)
+    df_sorted.loc[df_sorted.groupby('ID_DOENTE').head(1).index, 'before_showed_up'] = 0
+    return alertP1
+
+
+
 
 
 
