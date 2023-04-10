@@ -1,5 +1,6 @@
 # Cache files
 **/__pycache__
+**/.csv
 
 # Credentials
 *credentials.txt
