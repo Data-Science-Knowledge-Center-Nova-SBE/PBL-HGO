@@ -178,6 +178,81 @@ def categorize_symptoms(df, column, symptoms_excel, threshold=75):
 
     return df
 
+def categorize_symptoms_simple(df, column, symptoms_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = symptom 
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    symptoms_df = pd.read_excel(symptoms_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in symptoms_df.iterrows():
+            symptom_name = row["symptom"].lower()
+            symptom_consultation = 'symptom_identified'
+            for word in words:
+                ratio = fuzz.ratio(symptom_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', symptom_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_comorbidities(df, column, commorbidities_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = comorbidity
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    comorbidities_df = pd.read_excel(commorbidities_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in comorbidities_df.iterrows():
+            comorbidity_name = row["comorbidity"].lower()
+            comorbidity_consultation = 'comorbidity_identified'
+            for word in words:
+                ratio = fuzz.ratio(comorbidity_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', comorbidity_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_exams(df, column, exams_excel, threshold=90):
+    #The file should have a header and follow the structure [0] = exam
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    exams_df = pd.read_excel(exams_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in exams_df.iterrows():
+            exam_name = row["exam"].lower()
+            exam_consultation = 'exam_identified'
+            for word in words:
+                ratio = fuzz.ratio(exam_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', exam_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
 def get_word_list (df, column):
     
     from collections import Counter
