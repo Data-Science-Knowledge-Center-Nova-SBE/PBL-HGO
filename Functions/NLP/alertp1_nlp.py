@@ -273,3 +273,38 @@ def add_textcount_columns(df, text_column, text):
     df[text] = df[text_column].apply(lambda x: count_substring(x, text))
 
     return df
+
+def check_synonyms(excel_file, df, column, threshold, process_all=False, word=None):
+
+    from fuzzywuzzy import fuzz
+    import re
+
+    # Load the list of synonyms from the Excel file
+    synonyms_df = pd.read_excel(excel_file)
+
+    # Define a function to check if any of the synonyms are present in the text
+    def check_text(text, synonyms):
+        count = 0
+        words = re.findall(r'\b\w+\b', text.lower())
+        for word in words:
+            # Use fuzzywuzzy to allow for some mistakes in the way words are written
+            scores = [fuzz.ratio(word, synonym) for synonym in synonyms]
+            if max(scores) >= threshold:
+                count += 1
+        return count
+
+    if process_all:
+        # Process all column names from the Excel file
+        for word in synonyms_df.columns:
+            synonyms = synonyms_df[word].dropna().str.lower().tolist()
+            df[f"count_{word}"] = df[column].apply(lambda x: check_text(x, synonyms))
+    else:
+        # Process only the given word
+        if word is None:
+            raise ValueError("Please provide a word to process.")
+        if word not in synonyms_df.columns:
+            raise ValueError(f"Invalid word: {word}. Available words: {list(synonyms_df.columns)}")
+        synonyms = synonyms_df[word].dropna().str.lower().tolist()
+        df[f"count_{word}"] = df[column].apply(lambda x: check_text(x, synonyms))
+
+    return df
