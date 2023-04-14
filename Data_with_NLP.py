@@ -27,9 +27,9 @@ def symptoms_column2(alertP1):
    return(alertP1)
 def exams(alertP1):
    categorize_exams(alertP1,"clean_text", "Data/exams_data.xlsx", 95)
-   add_textcount_columns(alertP1,"clean_text","exams_identified") 
+   add_textcount_columns(alertP1,"clean_text","exam_identified") 
    return(alertP1)
 def comorbidities(alertP1):
    categorize_comorbidities(alertP1,"clean_text", "Data/comorbidities_data.xlsx", 85)
-   add_textcount_columns(alertP1,"clean_text","comorbidities_identified") 
+   add_textcount_columns(alertP1,"clean_text","comorbidity_identified") 
    return(alertP1)
