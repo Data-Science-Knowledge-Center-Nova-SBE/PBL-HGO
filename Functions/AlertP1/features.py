@@ -24,24 +24,34 @@ def referral_steps(alertP1):
 #create a column with units
 def unit(alertP1):
     #create  lists with units 
-    USF_list=[2090771,3111172,3111174,3112271,3113271,3113274,3113672,3113871,3114272,3114471,3150371,3150571,3150572,3150573,3150872,3151571,3151572,3151573,3151574,3151575,3151576,3151671,3151672,3151771,3151772,3151871,3151872,3152403,3152471,3152671,4070571,4070671,4121571]
-    UCSP_list=[3150305,3150506,3151701,3151707,3151802,3152401]
-    alertP1['unit']=['USF' if x in USF_list else 'UCSP' if x in UCSP_list else 'CS' for x in alertP1['COD_UNID_SAUDE_PROV']]
-    alertP1['unit'][alertP1['TIPO_UNID']!='CS/USF']='HOSP'
+    usf_A=[2090771,3111400,3112271,3113274,3150502,3150604,3151407,3152002,4071200,4120400,4121300]
+    usf_B=[3151572,3111172,3111174,3113271,3113672,3113871,3114272,3114471,3150109,3150371,3150501,3150503,3150571,3150572,3150573,3150600,3150603,3150671,3150672,3150772,3150773,3151104,3151409,3151500,3151571,3151573,3151574,3151575,3151576,3151601,3151603,3151671,3151672,3151771,3151772,3151871,3151872,3152001,3152403,3152471,3152671,4070571,4070671,4121571]
+    UCSP_list=[3111800,3140500,3150305,3150504,3150506,3150605,3150801,3150872,3151000,3151101,3151201,3151306,3151400,3151402,3151404,3151406,3151600,3151701,3151707,3151802,3152100,3152400,3152401,4020200,4020604,4021100,4021104,4021108,4021110,4021112,4021113,4070400,4120100,4120602,4121100,4121101,4121200,4121400,4121500]
+    outro=[3150301,3150330,9999999]
+    alertP1['unit']=['USF A' if x in usf_A else 'USF B' if x in usf_B else 'UCSP' if x in UCSP_list else 'outro' if x in outro else 'HGO' if x==0 else 'HOSP' for x in alertP1['COD_UNID_SAUDE_PROV']]
+    return  alertP1
+  
+
     return alertP1
-
-
-#the code sorts the referrals first for ID and after data _recepçao.
-# the first referral is always 0 even it is accepted or rejected. 
-#If there is a referral acceptad before than all other referrals of that patient is 1
+#create a column with accepted before or not
 def bef_accepted(alertP1):
-
-    df_sorted = alertP1.sort_values(['ID_DOENTE', 'DATA_RECEPCAO'])
-    df_sorted["result"]=df_sorted["result"].astype("int")
-    df_sorted.loc[df_sorted['ID_DOENTE'].ne(df_sorted['ID_DOENTE'].shift()), 'before_accepted'] = 0
-    df_sorted['before_accepted'] = df_sorted.groupby('ID_DOENTE')['result'].cumsum().clip(upper=1)
-    df_sorted.loc[df_sorted.groupby('ID_DOENTE').head(1).index, 'before_showed_up'] = 0
+    alertP1= alertP1.sort_values(['ID_DOENTE', 'DATA_RECEPCAO'])
+    alertP1["result"]=alertP1["result"].astype("int")
+    alertP1.loc[alertP1['ID_DOENTE'].ne(alertP1['ID_DOENTE'].shift()), 'before_accepted'] = 0
+    alertP1['before_accepted'] = alertP1.groupby('ID_DOENTE')['result'].cumsum().clip(upper=1)
+    alertP1.loc[alertP1[alertP1['result'] == 1].groupby('ID_DOENTE').head(1).index, 'before_accepted'] = 0
+    alertP1.loc[alertP1['before_accepted']==1, 'before_accepted'] = 'accepted before'
+    alertP1.loc[alertP1['before_accepted']==0, 'before_accepted'] = 'not accepted before'
     return alertP1
+ 
+
+
+
+
+
+
+
+
 
 
 

@@ -13,16 +13,9 @@ def remove_names(string):
         
     return text
 
-def lower_text(df, column):
+def lower_text(df, column, new_column):
 
-    df = df[column].str.lower()
-
-    """# Create an empty list to store the text
-    text_list = []
-
-    # Loop through the 'text' column
-    for text in df.str.lower(): # Transform every word to lower case
-        text_list.append(text)"""
+    df[new_column] = df[column].str.lower()
 
     return df
 
@@ -117,7 +110,7 @@ def medications_text(df, excel_file):
     import pandas as pd
 
     # Import excel file with medications
-    medications = pd.read_excel('allPackages.xls')
+    medications = pd.read_excel('excel_file')
     medications['Nome do medicamento'].count()
     medications = medications.groupby(['Nome do medicamento']).size().reset_index(name='counts').sort_values(by = 'counts')
     medications = pd.DataFrame(medications)
@@ -135,3 +128,183 @@ def medications_text(df, excel_file):
     
     result = df.loc[mask, :]
     
+def categorize_medication(df, column, medications_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = Drug Name and [1] = Level
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    medications_df = pd.read_excel(medications_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in medications_df.iterrows():
+            medication_name = row["name"].lower()
+            medication_level = 'medication_level_' + str(row['level'])
+            for word in words:
+                ratio = fuzz.ratio(medication_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', medication_level, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_symptoms(df, column, symptoms_excel, threshold=75):
+    #The file should have a header and follow the structure [0] = symptom and [1] = consultation
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    symptoms_df = pd.read_excel(symptoms_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in symptoms_df.iterrows():
+            symptom_name = row["symptom"].lower()
+            symptom_consultation = 'symptom_' + str(row['consultation'])
+            for word in words:
+                ratio = fuzz.ratio(symptom_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', symptom_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_symptoms_simple(df, column, symptoms_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = symptom 
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    symptoms_df = pd.read_excel(symptoms_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in symptoms_df.iterrows():
+            symptom_name = row["symptom"].lower()
+            symptom_consultation = 'symptom_identified'
+            for word in words:
+                ratio = fuzz.ratio(symptom_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', symptom_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_comorbidities(df, column, commorbidities_excel, threshold=80):
+    #The file should have a header and follow the structure [0] = comorbidity
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    comorbidities_df = pd.read_excel(commorbidities_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in comorbidities_df.iterrows():
+            comorbidity_name = row["comorbidity"].lower()
+            comorbidity_consultation = 'comorbidity_identified'
+            for word in words:
+                ratio = fuzz.ratio(comorbidity_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', comorbidity_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
+def categorize_exams(df, column, exams_excel, threshold=90):
+    #The file should have a header and follow the structure [0] = exam
+    
+    #Install of fuzzywuzzy is required
+    #pip install fuzzywuzzy
+
+    from fuzzywuzzy import fuzz
+    from fuzzywuzzy import process
+    import re
+
+    exams_df = pd.read_excel(exams_excel,header= 0)
+
+    for i, text in df[column].iteritems():
+        words = re.findall(r'\b\w+\b', text)
+        for index, row in exams_df.iterrows():
+            exam_name = row["exam"].lower()
+            exam_consultation = 'exam_identified'
+            for word in words:
+                ratio = fuzz.ratio(exam_name, word)
+                if ratio >= threshold:
+                    text = re.sub(r'\b' + word + r'\b(?![\w])', exam_consultation, text)
+        df.at[i, column] = text
+
+    return df
+
+def get_word_list (df, column):
+    
+    from collections import Counter
+    words = df[column].str.split(expand=True).stack()
+    word_counts = Counter(words)
+    word_counts_df = pd.DataFrame.from_dict(word_counts, orient='index', columns=['count']).reset_index().rename(columns={'index': 'word'})
+    word_counts_df = word_counts_df.sort_values(by='count', ascending=False)
+
+    return word_counts_df
+
+
+def add_textcount_columns(df, text_column, text):
+    # Define a function to count the occurrences of a substring in a string
+    def count_substring(string, substring):
+        return string.count(substring)
+
+    # Create new columns by applying the count_substring function to the Text column
+    df[text] = df[text_column].apply(lambda x: count_substring(x, text))
+
+    return df
+
+def check_synonyms(excel_file, df, column, threshold, process_all=False, word=None):
+
+    from fuzzywuzzy import fuzz
+    import re
+
+    # Load the list of synonyms from the Excel file
+    synonyms_df = pd.read_excel(excel_file)
+
+    # Define a function to check if any of the synonyms are present in the text
+    def check_text(text, synonyms):
+        count = 0
+        words = re.findall(r'\b\w+\b', text.lower())
+        for word in words:
+            # Use fuzzywuzzy to allow for some mistakes in the way words are written
+            scores = [fuzz.ratio(word, synonym) for synonym in synonyms]
+            if max(scores) >= threshold:
+                count += 1
+        return count
+
+    if process_all:
+        # Process all column names from the Excel file
+        for word in synonyms_df.columns:
+            synonyms = synonyms_df[word].dropna().str.lower().tolist()
+            df[f"count_{word}"] = df[column].apply(lambda x: check_text(x, synonyms))
+    else:
+        # Process only the given word
+        if word is None:
+            raise ValueError("Please provide a word to process.")
+        if word not in synonyms_df.columns:
+            raise ValueError(f"Invalid word: {word}. Available words: {list(synonyms_df.columns)}")
+        synonyms = synonyms_df[word].dropna().str.lower().tolist()
+        df[f"count_{word}"] = df[column].apply(lambda x: check_text(x, synonyms))
+
+    return df
