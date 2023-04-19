@@ -8,5 +8,6 @@ def structured_data_dummies(alertP1):
     unit= pd.get_dummies(data['unit'],drop_first=True)
     data.drop(['area','PROVENIENCIA','step','unit','speciality_type'],axis=1,inplace=True)
     data = pd.concat([data,area,Provenance,speciality,step,unit],axis=1)
+    data.columns = data.columns.astype(str)
     return data
 
