@@ -1,6 +1,6 @@
 
 
-from sklearn.pipeline import Pipeline_Self
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer
 from numpy import argsort
 from Functions.AlertP1.data_cleaning import *
