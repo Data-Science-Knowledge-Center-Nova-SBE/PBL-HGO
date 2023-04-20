@@ -15,7 +15,8 @@ def pre_process(df):
     #Additional Functions
 
     def sort_values(df):
-        return df.sort_values('DATA_RECEPCAO')
+        df = df.sort_values('DATA_RECEPCAO')
+        return df
 
     def text_only(df):
         df=df[df['text_length']>0]
@@ -39,7 +40,6 @@ def pre_process(df):
         ('Duplicated Entities', FunctionTransformer(entity_duplicated)),
         ('Lower Case Text ', FunctionTransformer(lowering_text)),
         ('Target Variable', FunctionTransformer(result)),
-        ('Sort Values', FunctionTransformer(sort_values)),
         #Structured Features
         ('Accepted Before', FunctionTransformer(bef_accepted)),
         ('Area Classification', FunctionTransformer(class_area)),
@@ -60,7 +60,9 @@ def pre_process(df):
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
         #Keep only text rows
-        ('Text Only', FunctionTransformer(text_only))
+        ('Text Only', FunctionTransformer(text_only)),
+        #Sort Values
+        ('Sort Values', FunctionTransformer(sort_values))
     ])
 
     transformed_data = pipeline.fit_transform(df)
