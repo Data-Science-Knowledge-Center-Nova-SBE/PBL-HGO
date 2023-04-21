@@ -34,7 +34,6 @@ def comorbidities(alertP1):
    add_textcount_columns(alertP1,"clean_text","comorbidity_identified") 
    return(alertP1)
 def synonyms(alertP1):
-   check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text", 80, process_all=False, word='Alteração')
+   check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text", 80, process_all=True)
    return(alertP1)
-
     
