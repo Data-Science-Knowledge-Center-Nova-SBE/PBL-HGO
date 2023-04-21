@@ -54,7 +54,6 @@ def pre_process(df):
         df['symptoms0_concentration']=df['symptom_0']/df['text_length']
         return df
 
-
     def exams_concentration(df):
         df['exams_concentration']=df['exam_identified']/df['text_length']
         return df
