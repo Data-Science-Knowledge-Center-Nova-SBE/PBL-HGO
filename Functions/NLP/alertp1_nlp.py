@@ -273,6 +273,7 @@ def add_textcount_columns(df, text_column, text):
     df[text] = df[text_column].apply(lambda x: count_substring(x, text))
 
     return df
+
 def check_synonyms(excel_file, df, column, threshold, process_all=False, word=None):
 
     from fuzzywuzzy import fuzz
