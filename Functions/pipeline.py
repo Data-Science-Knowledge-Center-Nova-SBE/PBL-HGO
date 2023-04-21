@@ -24,11 +24,43 @@ def pre_process(df):
     def medication_count(df):
         df['medication_count']=df['medication_level_1']+df['medication_level_2']+df['medication_level_3']
         return df
-
     def medication_concentration(df):
         df['medication_concentration']=df['medication_count']/df['text_length']
         return df
+    def medication1_concentration(df):
+        df['medication1_concentration']=df['medication_level_1']/df['text_length']
+        return df
+    
+    def medication2_concentration(df):
+        df['medication2_concentration']=df['medication_level_2']/df['text_length']
+        return df
+    
+    def medication3_concentration(df):
+        df['medication3_concentration']=df['medication_level_3']/df['text_length']
+        return df
+    
+    
+    def symptoms_count(df):
+        df['symptoms_count']=df['symptom_0']+df['symptom_1']
+        return df
 
+    def symptoms_concentration(df):
+        df['symptoms_concentration']=df['symptoms_count']/df['text_length']
+        return df
+    def symptoms1_concentration(df):
+        df['symptoms1_concentration']=df['symptom_1']/df['text_length']
+        return df
+    def symptoms0_concentration(df):
+        df['symptoms0_concentration']=df['symptom_0']/df['text_length']
+        return df
+
+
+    def exams_concentration(df):
+        df['exams_concentration']=df['exam_identified']/df['text_length']
+        return df
+    def comorbidities_concentration(df):
+        df['comorbidities_concentration']=df['comorbidity_identified']/df['text_length']
+        return df
 
     #Pipeline
 
@@ -53,6 +85,15 @@ def pre_process(df):
         ('medication_column', FunctionTransformer(medication_column)),
         ('Medication Total Count', FunctionTransformer(medication_count)),
         ('Medication Concentration', FunctionTransformer(medication_concentration)),
+        ('Medication1 Concentration', FunctionTransformer(medication1_concentration)),
+        ('Medication2 Concentration', FunctionTransformer(medication2_concentration)),
+        ('Medication3 Concentration', FunctionTransformer(medication3_concentration)),
+        ('Symptoms Total Count', FunctionTransformer(symptoms_count)),
+        ('Symptoms Concentration', FunctionTransformer(symptoms_concentration)),
+        ('Symptoms0 Concentration', FunctionTransformer(symptoms0_concentration)),
+        ('Symptoms1 Concentration', FunctionTransformer(symptoms1_concentration)),
+        ('exams Concentration', FunctionTransformer(exams_concentration)),
+        ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
         ('synonyms', FunctionTransformer(synonyms)),
         ('Retrieve original text', FunctionTransformer(lowering_text)),
         ('clean_text', FunctionTransformer(clean_text)),
