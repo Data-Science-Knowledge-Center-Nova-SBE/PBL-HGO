@@ -11,7 +11,6 @@ def connection(creds_path):
    "database"
    port
    """
-<<<<<<< HEAD
    df = pd.read_csv(creds_path, sep=" ", header=None, names=["Value"])
 
    #Connection to the database
@@ -20,14 +19,6 @@ def connection(creds_path):
    password = df["Value"][1]
    database = df["Value"][3]
    port = df["Value"][4]
-=======
-   creds = pd.read_csv(creds_path, sep=",", header=None, names=["value"])
-   host = creds['value'][1]
-   user = creds['value'][2]
-   password = creds['value'][3]
-   database = creds['value'][4]
-   port = creds['value'][5]
->>>>>>> gabrabib
    mydb = mysql.connector.connect(host=host, user=user, database=database, port=port, password=password, auth_plugin='mysql_native_password')
    mycursor = mydb.cursor()
 
