@@ -17,7 +17,11 @@ def replace_blank(alertP1):
 
 
 def result(alertP1):
+<<<<<<< HEAD
     alertP1['result']=['1' if x in [0,14,15,53,8,12,13] else '0' if x in [1,6,10,7,2] else '' for x in alertP1['COD_MOTIVO_RECUSA'] ]
+=======
+    alertP1['result']=[1 if x in [0,14,15,53,8,12,13] else 0 if x in [1,6,10,7,2] else '' for x in alertP1['COD_MOTIVO_RECUSA'] ]
+>>>>>>> gabrabib
     alertP1=alertP1[alertP1['result']!='']
     return(alertP1)
 
