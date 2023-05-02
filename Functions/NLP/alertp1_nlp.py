@@ -34,7 +34,7 @@ def remove_stop_words(df, original_column, new_column):
 
     # Get the Portuguese stop words
     stop_words = set(stopwords.words('portuguese'))
-    stop_words.update(['.', ',','(',')',':','-','?','+','/',';','drª','``','','se',"''",'cerca','refere','hgo','utente','vossa','s','...','ainda','c','filha','costa','dr.','pereira','ja','--','p','dr','h','n','>','q','//','..','b','++','%'])
+    stop_words.update(['.', ',','(',')',':','-','?','+','/',';','drª','``','','se',"''",'cerca','refere','utente','vossa','s','...','ainda','c','filha','costa','dr.','pereira','ja','--','p','dr','h','n','>','q','//','..','b','++','%'])
     ###### I THINK WE SHOULD REMOVE ALETRAÇOES FROM THIS LIST#########
 
     # Create a new list to store the filtered text
@@ -140,7 +140,7 @@ def categorize_medication(df, column, medications_excel, threshold=80):
 
     medications_df = pd.read_excel(medications_excel,header= 0)
 
-    for i, text in df[column].iteritems():
+    for i, text in df[column].items():
         words = re.findall(r'\b\w+\b', text)
         for index, row in medications_df.iterrows():
             medication_name = row["name"].lower()
@@ -165,7 +165,7 @@ def categorize_symptoms(df, column, symptoms_excel, threshold=75):
 
     symptoms_df = pd.read_excel(symptoms_excel,header= 0)
 
-    for i, text in df[column].iteritems():
+    for i, text in df[column].items():
         words = re.findall(r'\b\w+\b', text)
         for index, row in symptoms_df.iterrows():
             symptom_name = row["symptom"].lower()
@@ -190,7 +190,7 @@ def categorize_symptoms_simple(df, column, symptoms_excel, threshold=80):
 
     symptoms_df = pd.read_excel(symptoms_excel,header= 0)
 
-    for i, text in df[column].iteritems():
+    for i, text in df[column].items():
         words = re.findall(r'\b\w+\b', text)
         for index, row in symptoms_df.iterrows():
             symptom_name = row["symptom"].lower()
@@ -215,7 +215,7 @@ def categorize_comorbidities(df, column, commorbidities_excel, threshold=80):
 
     comorbidities_df = pd.read_excel(commorbidities_excel,header= 0)
 
-    for i, text in df[column].iteritems():
+    for i, text in df[column].items():
         words = re.findall(r'\b\w+\b', text)
         for index, row in comorbidities_df.iterrows():
             comorbidity_name = row["comorbidity"].lower()
@@ -240,7 +240,7 @@ def categorize_exams(df, column, exams_excel, threshold=90):
 
     exams_df = pd.read_excel(exams_excel,header= 0)
 
-    for i, text in df[column].iteritems():
+    for i, text in df[column].items():
         words = re.findall(r'\b\w+\b', text)
         for index, row in exams_df.iterrows():
             exam_name = row["exam"].lower()
