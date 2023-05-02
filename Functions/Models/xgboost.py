@@ -38,7 +38,7 @@ def xgb_classifier(features, target):
     # Make predictions on the test set
     y_pred_test = bst.predict(dtest)
     
-    return y_pred_train, y_pred_test, bst.get_score(), X_train, X_test, y_train, y_test    
+    return y_pred_train, y_pred_test, bst.get_score(), X_train, X_test, y_train, y_test      
 
 
 def evaluate_thresholds(y_pred_train, y_train, y_pred_test, y_test, metrics = "test", k=211):
