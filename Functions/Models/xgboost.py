@@ -14,8 +14,8 @@ def xgb_classifier(features, target):
     # split X and y into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2,random_state=16,shuffle=False)
 
-    X_train['before_accepted'] = X_train['before_accepted'].astype('category')
-    X_test['before_accepted'] = X_test['before_accepted'].astype('category')
+    #X_train['before_accepted'] = X_train['before_accepted'].astype('category')
+    #X_test['before_accepted'] = X_test['before_accepted'].astype('category')
 
     # Convert data into DMatrix format
     dtrain = xgb.DMatrix(X_train, label=y_train, enable_categorical = True)
