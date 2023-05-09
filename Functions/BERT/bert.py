@@ -5,14 +5,15 @@ from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModel   # for BERT
 
 
-def bert_embedding(dataset, column, acceptance_list):
+def bert_embedding(dataset, column, acceptance_list, prefix, model_name='sentence-transformers/multi-qa-MiniLM-L6-cos-v1'):
 
-    tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/bert-base-nli-mean-tokens')
-    model = AutoModel.from_pretrained('sentence-transformers/bert-base-nli-mean-tokens')
 
     referrals = dataset[column].tolist()
 
     for index, protocol in enumerate(acceptance_list):
+
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModel.from_pretrained(model_name)
 
         sentences = [protocol] + referrals
 
@@ -64,6 +65,6 @@ def bert_embedding(dataset, column, acceptance_list):
             [mean_pooled[0]],
             mean_pooled[1:]
         )
-
-        dataset[index] = results[0]
+        column_name = prefix + str(index)
+        dataset[column_name] = results[0]
 
