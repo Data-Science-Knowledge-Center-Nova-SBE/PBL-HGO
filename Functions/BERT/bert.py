@@ -3,7 +3,7 @@ import torch
 from transformers import BertTokenizer, BertModel
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModel   # for BERT
-
+from Data_with_NLP import *
 
 def bert_embedding(dataset, column, baseline_list, prefix, model_name='sentence-transformers/multi-qa-MiniLM-L6-cos-v1'):
 
@@ -75,3 +75,51 @@ def bert_embedding(dataset, column, baseline_list, prefix, model_name='sentence-
         column_name = prefix + str(index)
         dataset[column_name] = results[0]
 
+
+def bert_easy(dataset, column_name, baseline_list, suffix = 'max'):
+    
+    from sklearn.metrics.pairwise import cosine_similarity
+
+    # Creating a list to store the text
+    referrals = dataset[column_name].tolist()
+
+    # Creating a list to store the column names
+    columns_bert = []
+
+    # Looping through the baseline list
+    for index, protocol in enumerate(baseline_list):
+
+        # Creating a list with the protocol and the referrals
+        sentences = [protocol] + referrals
+        
+        # Encoding the sentences
+        sentences_vectors = model.encode(sentences)
+
+        # Calculating the cosine similarity
+        results = cosine_similarity([sentences_vectors[0]], sentences_vectors[1:])
+
+        # Appending the information on the dataset
+        column_name = 'prot_' + str(index)
+        columns_bert.append(column_name)
+        dataset[column_name] = results[0]
+
+    dataset[suffix + '_score'] = dataset[columns_bert].max(axis=1)
+    dataset.drop(columns_bert, axis=1, inplace=True)
+    
+    return dataset
+
+def bert_protocols(data, reference):
+
+    split_text_df = data[['COD_REFERENCIA', 'Texto', 'text_length']]
+    split_text_df = split_text_df[split_text_df['text_length'] > 0]
+    split_text_df['text_split'] = split_text_df['Texto'].apply(lambda x: x.split("."))
+    split_text_df =  split_text_df.explode('text_split')
+    lower_text(split_text_df,'text_split', 'text_split')
+    remove_stop_words(split_text_df,'text_split', 'text_split')
+    spacy_lemmatizer(split_text_df,'text_split', 'text_split')
+    
+    for i, protocol in enumerate(reference):
+
+        bert_easy(split_text_df, 'text_split', protocol, suffix = str(i))
+
+    return split_text_df
