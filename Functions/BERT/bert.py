@@ -1,6 +1,7 @@
 
 import torch
 from transformers import BertTokenizer, BertModel
+from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModel   # for BERT
 from Data_with_NLP import *
@@ -102,7 +103,7 @@ def bert_easy(dataset, column_name, baseline_list, suffix = 'max', model_name = 
     """
     
     from sklearn.metrics.pairwise import cosine_similarity
-
+    from sentence_transformers import SentenceTransformer
 
     model = SentenceTransformer(model_name)
 
@@ -135,6 +136,8 @@ def bert_easy(dataset, column_name, baseline_list, suffix = 'max', model_name = 
     return dataset
 
 def bert_split_referrals(data, reference, model_name = 'sentence-transformers/msmarco-MiniLM-L-6-v3'):
+    
+    from sentence_transformers import SentenceTransformer
 
     split_text_df = data[['COD_REFERENCIA', 'Texto', 'text_length']]
     split_text_df = split_text_df[split_text_df['text_length'] > 0]
