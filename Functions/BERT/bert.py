@@ -9,6 +9,7 @@ def bert_embedding(dataset, column, baseline_list, prefix, model_name='sentence-
 
     # Get the sentences from the dataset (to be compared to the basiline list)
     referrals = dataset[column].tolist()
+    
 
     # Initialize the BERT tokenizer per sentence on the baseline list
     for index, protocol in enumerate(baseline_list):
@@ -76,9 +77,34 @@ def bert_embedding(dataset, column, baseline_list, prefix, model_name='sentence-
         dataset[column_name] = results[0]
 
 
-def bert_easy(dataset, column_name, baseline_list, suffix = 'max'):
+def bert_easy(dataset, column_name, baseline_list, suffix = 'max', model_name = 'sentence-transformers/msmarco-MiniLM-L-6-v3'):
+    
+    """Performs the BERT embedding and calculates the cosine similarity between the baseline list and the referrals.
+    
+    Parameters
+    ----------
+    dataset : pandas.DataFrame
+        The dataset to be used.
+    column_name : str
+        The name of the column with the referrals.  
+    baseline_list : list
+        The list with the baseline protocols.
+    suffix : str, optional
+        The suffix to be added to the column name. The default is 'max'.
+    model_name : str, optional
+        The name of the model to be used. The default is Asymmetric 'sentence-transformers/msmarco-MiniLM-L-6-v3'.
+    
+    Returns
+    -------
+    dataset : pandas.DataFrame
+        The dataset with the cosine similarity between the baseline list and the referrals.
+
+    """
     
     from sklearn.metrics.pairwise import cosine_similarity
+
+
+    model = SentenceTransformer(model_name)
 
     # Creating a list to store the text
     referrals = dataset[column_name].tolist()
@@ -108,7 +134,7 @@ def bert_easy(dataset, column_name, baseline_list, suffix = 'max'):
     
     return dataset
 
-def bert_protocols(data, reference):
+def bert_split_referrals(data, reference, model_name = 'sentence-transformers/msmarco-MiniLM-L-6-v3'):
 
     split_text_df = data[['COD_REFERENCIA', 'Texto', 'text_length']]
     split_text_df = split_text_df[split_text_df['text_length'] > 0]
@@ -118,8 +144,14 @@ def bert_protocols(data, reference):
     remove_stop_words(split_text_df,'text_split', 'text_split')
     spacy_lemmatizer(split_text_df,'text_split', 'text_split')
     
+    desired_columns = []
+
     for i, protocol in enumerate(reference):
 
-        bert_easy(split_text_df, 'text_split', protocol, suffix = str(i))
+        bert_easy(split_text_df, 'text_split', protocol, suffix = str(i), model_name = model_name)
+        desired_columns.append(str(i) + '_score')
 
-    return split_text_df
+    split_text_df = split_text_df.groupby('COD_REFERENCIA')[desired_columns].max()
+    data = data.merge(split_text_df, on='COD_REFERENCIA', how='left')
+
+    return data
