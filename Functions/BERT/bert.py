@@ -102,7 +102,7 @@ def bert_easy(dataset, column_name, baseline_list, suffix = 'max'):
         column_name = 'prot_' + str(index)
         columns_bert.append(column_name)
         dataset[column_name] = results[0]
-
+    
     dataset[suffix + '_score'] = dataset[columns_bert].max(axis=1)
     dataset.drop(columns_bert, axis=1, inplace=True)
     
