@@ -26,3 +26,4 @@ def connection(creds_path):
    print(mydb.connection_id) #it'll give connection_id,if got connected
    alertP1 = pd.read_sql("""SELECT * FROM consultaneurologia201216anon_true""",mydb)
    return(alertP1)
+
