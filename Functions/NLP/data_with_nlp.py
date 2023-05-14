@@ -15,14 +15,6 @@ def medication_column(alertP1):
    add_textcount_columns(alertP1,"clean_text","medication_level_2")
    add_textcount_columns(alertP1,"clean_text","medication_level_3")   
    return(alertP1)
-def medication_count(df):
-        df['medication_count']=df['medication_level_1']+df['medication_level_2']+df['medication_level_3']
-        return df
-
-def medication_concentration(df):
-        df['medication_concentration']=df['medication_count']/df['text_length']
-        return df
-
 #Symptoms
 def symptoms_column(alertP1):
    categorize_symptoms(alertP1,"clean_text", "Data/symptoms_data.xlsx", 80)
@@ -44,6 +36,5 @@ def comorbidities(alertP1):
 def synonyms(alertP1):
    check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text", 80, process_all=True)
    return(alertP1)
-
 
     

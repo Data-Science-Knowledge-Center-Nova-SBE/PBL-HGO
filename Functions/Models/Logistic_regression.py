@@ -21,3 +21,14 @@ def log_regression(features,target):
     y_pred = logreg.predict(X_test)
     return y_pred,clf.coef_, clf.intercept_,X_train, X_test, y_train, y_test
 
+
+# Evaluate the accuracy of the train set
+#accuracy = accuracy_score(y_train, logreg.predict(X_train))
+#print("Accuracy of the train set:", accuracy)
+
+# Evaluate the recall of the train set
+#recall = recall_score(y_train,logreg.predict(X_train), average='macro')
+#print("Recall of the train set:", recall)
+# Evaluate the precision of the train set
+#precision = precision_score(y_train, logreg.predict(X_train), average='macro')
+#print("Precision of the train set:", precision)
