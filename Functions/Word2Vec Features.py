@@ -3,7 +3,7 @@
 
 # In[1]:
 
-
+# Word2Vec Function
 import gensim
 from gensim.models import Word2Vec
 import numpy as np
@@ -55,6 +55,42 @@ def get_word2vec_features(text_data):
 
 
 # In[ ]:
+# TF-IDF weighted Word2Vec vectors Function
+import gensim
+from gensim.models import Word2Vec
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+def compute_weighted_vectors(dataframe):
+    # get the text data from a column in the DataFrame
+    text_data = dataframe['text_lemmatized'].tolist()
+
+    # create a TF-IDF vectorizer
+    tfidf = TfidfVectorizer()
+    tfidf.fit(text_data)
+
+    # transform the text data into a TF-IDF matrix
+    tfidf_matrix = tfidf.transform(text_data)
+
+    # train a Word2Vec model on the sentences
+    sentences = [sentence.split() for sentence in text_data]
+    model = Word2Vec(sentences, min_count=1, vector_size=100, workers=4)
+
+    # get the Word2Vec vectors for the words in the vocabulary
+    vectors = model.wv.vectors
+
+    # get the vocabulary of the Word2Vec model
+    vocab = model.wv.key_to_index.keys()
+
+    # compute the TF-IDF weighted Word2Vec vectors
+    weighted_vectors = []
+    for i, word in enumerate(vocab):
+        tfidf_score = tfidf.idf_[tfidf.vocabulary_[word]] if word in tfidf.vocabulary_ else 1
+        weighted_vector = vectors[i] * tfidf_score
+        weighted_vectors.append(weighted_vector)
+
+    # return the weighted Word2Vec vectors and their corresponding words
+    return list(zip(vocab, weighted_vectors))
+
 
 
 
