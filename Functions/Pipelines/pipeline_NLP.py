@@ -94,7 +94,6 @@ def pre_process(df):
         ('exams Concentration', FunctionTransformer(exams_concentration)),
         ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
         ('synonyms', FunctionTransformer(synonyms)),
-        ('Retrieve original text', FunctionTransformer(lowering_text)),
         ('clean_text', FunctionTransformer(clean_text)),
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
