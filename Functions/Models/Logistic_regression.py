@@ -18,8 +18,13 @@ def log_regression(features,target):
     logreg = LogisticRegression(random_state=16)
     # fit the model with data
     clf=logreg.fit(X_train, y_train)
-    y_pred = logreg.predict(X_test)
-    return y_pred,clf.coef_, clf.intercept_,X_train, X_test, y_train, y_test
+     # Make preictions on the train set
+    y_train_scores = logreg.predict_proba(X_train)[:, 1]
+    # Make predictions on the test set
+    y_test_scores = logreg.predict_proba(X_test)[:, 1]
+    
+    return y_train_scores, y_test_scores, clf.coef_, X_train, X_test, y_train, y_test 
+   
 
 
 # Evaluate the accuracy of the train set

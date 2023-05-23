@@ -7,13 +7,16 @@ from Functions.AlertP1.features import *
 from Functions.analysis.step_analysis import *
 from Functions.AlertP1.dummy_features import *
 from Functions.Models.evaluation import *
-
+from Functions.NLP.data_with_nlp import *
 
 def pre_process(df):
     #Additional Functions
 
     def sort_values(df):
         df = df.sort_values('DATA_RECEPCAO')
+        return df
+    def text_only(df):
+        df=df[df['text_length']>0]
         return df
 
    
@@ -33,8 +36,12 @@ def pre_process(df):
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
         ('Unit', FunctionTransformer(unit)),
+        ('Lower Case Text ', FunctionTransformer(lowering_text)),
+        ('clean_text', FunctionTransformer(clean_text)),
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
+        #Keep only text rows
+        ('Text Only', FunctionTransformer(text_only)),
         #Sort Values
         ('Sort Values', FunctionTransformer(sort_values))
     ])
