@@ -36,5 +36,6 @@ def comorbidities(alertP1):
 def synonyms(alertP1):
    check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text", 80, process_all=True)
    return(alertP1)
-
-    
+def LDA(alertP1):
+   train_and_predict_lda(alertP1, n_components=2, learning_decay=0.5, random_state=16)
+   return(alertP1) 
