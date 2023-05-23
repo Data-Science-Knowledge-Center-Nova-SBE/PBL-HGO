@@ -308,3 +308,59 @@ def check_synonyms(excel_file, df, column, threshold, process_all=False, word=No
         df[f"count_{word}"] = df[column].apply(lambda x: check_text(x, synonyms))
 
     return df
+
+# LDA
+
+def train_and_predict_lda(X, n_components=2, learning_decay=0.5, random_state=16):
+    '''
+    X - Dataframe with the clean_text column
+    n_components - Preference to 2 or 3
+    '''
+
+    from sklearn.decomposition import LatentDirichletAllocation
+    from sklearn.feature_extraction.text import CountVectorizer
+    import re
+    from sklearn.model_selection import train_test_split
+
+    X['clean_text'] = X['clean_text'].str.replace(r'\d+', '', regex=True)
+
+
+    names = ['costa', 'silva', 'santos', 'ferreira', 'pereira', 'oliveira', 'rodrigues', 'maria', 'carolina', 'luísa', 'raquel', 'paula', 'joana', 'rita', 'manuel', 'joão', 'josé', 'francisco', 'antónio', 'luis', 'pedro']
+    for name in names:
+        X['clean_text'] = X['clean_text'].str.replace(fr'\b{name}\b', '', regex=True, flags=re.IGNORECASE)
+
+    months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"]
+    for month in months:
+        X['clean_text'] = X['clean_text'].str.replace(fr'\b{month}\b', '', regex=True, flags=re.IGNORECASE)
+    
+    # split the data into training and test sets
+    X_train, X_test = train_test_split(X, test_size=0.2, shuffle=False)
+    
+    # create a CountVectorizer to vectorize the text data
+    vectorizer = CountVectorizer()
+    
+    # vectorize the text data in the clean_text column of X_train
+    X_train_vectorized = vectorizer.fit_transform(X_train['clean_text'])
+    
+    # create and fit the LDA model
+    lda = LatentDirichletAllocation(n_components=n_components, learning_decay=learning_decay, random_state=random_state)
+    lda.fit(X_train_vectorized)
+    
+    # predict the topic probabilities for the training data
+    train_topic_probs = lda.transform(X_train_vectorized)
+    
+    # add the topic probabilities as columns to the X DataFrame for the training rows
+    for i in range(n_components):
+        X.loc[X_train.index, f'topic_{i}'] = train_topic_probs[:, i]
+    
+    # vectorize the text data in the clean_text column of X_test
+    X_test_vectorized = vectorizer.transform(X_test['clean_text'])
+    
+    # predict the topic probabilities for the test data
+    test_topic_probs = lda.transform(X_test_vectorized)
+    
+    # add the topic probabilities as columns to the X DataFrame for the test rows
+    for i in range(n_components):
+        X.loc[X_test.index, f'topic_{i}'] = test_topic_probs[:, i]
+    
+    return X
