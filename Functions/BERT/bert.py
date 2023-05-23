@@ -136,24 +136,51 @@ def bert_easy(dataset, column_name, baseline_list, suffix = 'max', model_name = 
     return dataset
 
 def bert_split_referrals(data, reference, model_name = 'sentence-transformers/msmarco-MiniLM-L-6-v3'):
+
+    """Performs the BERT embedding and calculates the cosine similarity between the baseline list and the referrals. 
+        Takes the referrals and splits them into sentences. Then, calculates the cosine similarity between the baseline list and the referrals. 
+        Merges the maximum cosine similarity for each referral into the original dataset on COD_REFERENCIA.
+
+    Parameters
+    ----------
+
+    data : pandas.DataFrame
+        The dataset to be used.
+    reference : list
+        The list with the baseline protocols.
+    model_name : str, optional
+        The name of the model to be used. The default is Asymmetric 'sentence-transformers/msmarco-MiniLM-L-6-v3'.
+
+    Returns
+    -------
+    split_text_df : pandas.DataFrame
+        The dataset with the cosine similarity between the baseline list and the referrals.
+
+    """
     
     from sentence_transformers import SentenceTransformer
 
+    # Exploding the referrals into sentences
     split_text_df = data[['COD_REFERENCIA', 'Texto', 'text_length']]
     split_text_df = split_text_df[split_text_df['text_length'] > 0]
     split_text_df['text_split'] = split_text_df['Texto'].apply(lambda x: x.split("."))
     split_text_df =  split_text_df.explode('text_split')
+
+    # Performing preprocessing on text
     lower_text(split_text_df,'text_split', 'text_split')
     remove_stop_words(split_text_df,'text_split', 'text_split')
     spacy_lemmatizer(split_text_df,'text_split', 'text_split')
     
     desired_columns = []
 
+    # Looping through the baseline list
     for i, protocol in enumerate(reference):
 
+        # Calculating the cosine similarity
         bert_easy(split_text_df, 'text_split', protocol, suffix = str(i), model_name = model_name)
         desired_columns.append(str(i) + '_score')
 
+    # Merging the maximum cosine similarity for each referral into the original dataset on COD_REFERENCIA
     split_text_df = split_text_df.groupby('COD_REFERENCIA')[desired_columns].max()
     data = data.merge(split_text_df, on='COD_REFERENCIA', how='left')
 
