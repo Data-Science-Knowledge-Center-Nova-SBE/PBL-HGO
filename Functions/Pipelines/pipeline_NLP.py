@@ -97,11 +97,11 @@ def pre_process(df):
         ('exams Concentration', FunctionTransformer(exams_concentration)),
         ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
         # Synonyms
-        ('synonyms', FunctionTransformer(synonyms)),
+        #('synonyms', FunctionTransformer(synonyms)),
         #LDA
-        ('LDA', FunctionTransformer(LDA)),
+        #('LDA', FunctionTransformer(LDA)),
         #bert
-        ('bert', FunctionTransformer(bert)),
+        #('bert', FunctionTransformer(bert)),
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
         #Keep only text rows
