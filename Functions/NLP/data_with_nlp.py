@@ -1,4 +1,5 @@
 from Functions.NLP.alertp1_nlp import *
+from Functions.BERT.bert import *
 
 ### NLP ###
 def lowering_text(alertP1):
@@ -37,5 +38,23 @@ def synonyms(alertP1):
    check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text", 80, process_all=True)
    return(alertP1)
 def LDA(alertP1):
-   train_and_predict_lda(alertP1, n_components=2, learning_decay=0.5, random_state=16)
+   train_and_predict_lda(alertP1, n_components=3, learning_decay=0.5, random_state=16)
    return(alertP1) 
+
+def bert(alertP1):
+   protocols = pd.read_csv('BERT/protocols_to_bert.csv')
+   baseline = protocols.columns.to_list()
+   reference = []
+
+   for col in baseline:
+    
+     protocols2 = protocols.copy()
+     protocols2 = protocols2[[col]].dropna()
+
+     lower_text(protocols2,col, col)
+     remove_stop_words(protocols2,col, col)
+     spacy_lemmatizer(protocols2,col, col)
+
+     reference.append(list(protocols2[col].dropna()))
+   alertP1=bert_split_referrals(alertP1, reference, model_name = 'sentence-transformers/msmarco-MiniLM-L-6-v3')
+   return (alertP1)

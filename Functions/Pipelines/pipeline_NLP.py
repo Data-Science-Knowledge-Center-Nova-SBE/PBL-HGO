@@ -9,6 +9,8 @@ from Functions.AlertP1.dummy_features import *
 from Functions.Models.evaluation import *
 from Functions.NLP.alertp1_nlp import *
 from Functions.NLP.data_with_nlp import *
+from Functions.BERT.bert import *
+
 
 def pre_process(df):
     #Additional Functions
@@ -68,7 +70,6 @@ def pre_process(df):
         ('Date Format', FunctionTransformer(date_format_alertP1)),
         ('Replace Blanks', FunctionTransformer(replace_blank)),
         ('Duplicated Entities', FunctionTransformer(entity_duplicated)),
-        ('Lower Case Text ', FunctionTransformer(lowering_text)),
         ('Target Variable', FunctionTransformer(result)),
         #Structured Features
         ('Accepted Before', FunctionTransformer(bef_accepted)),
@@ -77,7 +78,9 @@ def pre_process(df):
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
         ('Unit', FunctionTransformer(unit)),
-        #NLP Features
+        ('Lower Case Text ', FunctionTransformer(lowering_text)),
+        ('clean_text', FunctionTransformer(clean_text)),
+        #NLP meds symptoms...
         ('symptoms_column', FunctionTransformer(symptoms_column)),
         ('exams', FunctionTransformer(exams)),
         ('comorbidities', FunctionTransformer(comorbidities)),
@@ -93,8 +96,12 @@ def pre_process(df):
         ('Symptoms1 Concentration', FunctionTransformer(symptoms1_concentration)),
         ('exams Concentration', FunctionTransformer(exams_concentration)),
         ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
+        # Synonyms
         ('synonyms', FunctionTransformer(synonyms)),
-        ('clean_text', FunctionTransformer(clean_text)),
+        #LDA
+        ('LDA', FunctionTransformer(LDA)),
+        #bert
+        ('bert', FunctionTransformer(bert)),
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
         #Keep only text rows
