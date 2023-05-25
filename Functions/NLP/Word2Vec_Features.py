@@ -123,5 +123,39 @@ def word2vec_dummy(df, column, words_list, threshold=90):
         df[column_name] = df[column_name] * word_vec
         
     return df
+import math
+def w2v(alertP1):
+    #alertP1= pre_process(alertP1)
+    
+    # Split data into train and test
+    AlertP1_sorted = alertP1[alertP1['clean_text']!=''].sort_values(by='DATA_RECEPCAO')
+
+    # calculate the index for the split
+    split_index = math.ceil(0.8 * len(AlertP1_sorted))
+
+    # split the data frame into test and train sets
+    train_set = AlertP1_sorted.iloc[:split_index]
+    test_set = AlertP1_sorted.iloc[split_index:]
+
+
+    #Converting text into list of sentences
+    sentences = train_set['clean_text'].tolist()
+
+    #W2V model building
+    model = Word2Vec(sentences, window=3, min_count=5, workers=4,sg=1,alpha=0.01)  # Adjust parameters as needed
+    
+    #Featurization
+    def get_sentence_vector(sentence):
+        vectors = []
+        for word in sentence:
+            if word in model.wv:
+                vectors.append(model.wv[word])#If the word in the text exists in the W2V vocabulary, it assigns the vector 
+        if vectors:
+            return np.mean(vectors, axis=0)#Takes the mean of the vectors for that referral
+        else:
+            return np.zeros(model.vector_size) #if it can't find 
+        
+    alertP1['word2vec_feature'] = alertP1['clean_text'].apply(lambda x: get_sentence_vector(x)) #assigning w2v to the correct columns.
+    return(alertP1)
 
 
