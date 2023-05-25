@@ -85,7 +85,7 @@ def pre_process(df):
         # text cleaning
         ('Lower Case Text ', FunctionTransformer(lowering_text)),
         #Sort Values
-        ('Sort Values', FunctionTransformer(sort_values))
+        #('Sort Values', FunctionTransformer(sort_values))
         #NLP meds symptoms...
         ('symptoms_column', FunctionTransformer(symptoms_column)),
         ('exams', FunctionTransformer(exams)),
