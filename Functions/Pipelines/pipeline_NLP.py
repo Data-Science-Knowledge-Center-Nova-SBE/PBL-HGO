@@ -78,8 +78,12 @@ def pre_process(df):
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
         ('Unit', FunctionTransformer(unit)),
+        #Dummies
+        ('Dummies', FunctionTransformer(structured_data_dummies)),
+        #Keep only text rows
+        ('Text Only', FunctionTransformer(text_only)),
+        # text cleaning
         ('Lower Case Text ', FunctionTransformer(lowering_text)),
-        ('clean_text', FunctionTransformer(clean_text)),
         #NLP meds symptoms...
         ('symptoms_column', FunctionTransformer(symptoms_column)),
         ('exams', FunctionTransformer(exams)),
@@ -98,14 +102,12 @@ def pre_process(df):
         ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
         # Synonyms
         #('synonyms', FunctionTransformer(synonyms)),
+        ('clean_text', FunctionTransformer(clean_text)),
         #LDA
         #('LDA', FunctionTransformer(LDA)),
         #bert
         #('bert', FunctionTransformer(bert)),
-        #Dummies
-        ('Dummies', FunctionTransformer(structured_data_dummies)),
-        #Keep only text rows
-        ('Text Only', FunctionTransformer(text_only)),
+        
         #Sort Values
         ('Sort Values', FunctionTransformer(sort_values))
     ])
