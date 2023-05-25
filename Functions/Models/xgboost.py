@@ -1,13 +1,12 @@
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import precision_score
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score, recall_score, precision_score, precision_recall_curve, auc, confusion_matrix, cohen_kappa_score
 
 
 
@@ -15,8 +14,8 @@ def xgb_classifier(features, target):
     # split X and y into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2,random_state=16,shuffle=False)
 
-    X_train['before_accepted'] = X_train['before_accepted'].astype('category')
-    X_test['before_accepted'] = X_test['before_accepted'].astype('category')
+    #X_train['before_accepted'] = X_train['before_accepted'].astype('category')
+    #X_test['before_accepted'] = X_test['before_accepted'].astype('category')
 
     # Convert data into DMatrix format
     dtrain = xgb.DMatrix(X_train, label=y_train, enable_categorical = True)
@@ -34,7 +33,11 @@ def xgb_classifier(features, target):
     num_round = 10
     bst = xgb.train(param, dtrain, num_round)
 
+    # Make preictions on the train set
+    y_pred_train = bst.predict(dtrain)
     # Make predictions on the test set
-    y_pred = bst.predict(dtest)
+    y_pred_test = bst.predict(dtest)
     
-    return y_pred, bst.get_score(), X_train, X_test, y_train, y_test    
+    return y_pred_train, y_pred_test, bst.get_score(), X_train, X_test, y_train, y_test      
+
+

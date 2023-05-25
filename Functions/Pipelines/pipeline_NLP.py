@@ -9,6 +9,8 @@ from Functions.AlertP1.dummy_features import *
 from Functions.Models.evaluation import *
 from Functions.NLP.alertp1_nlp import *
 from Functions.NLP.data_with_nlp import *
+from Functions.BERT.bert import *
+from Functions.Chi_Squared.chi_squared import *
 
 def pre_process(df):
     #Additional Functions
@@ -54,7 +56,6 @@ def pre_process(df):
         df['symptoms0_concentration']=df['symptom_0']/df['text_length']
         return df
 
-
     def exams_concentration(df):
         df['exams_concentration']=df['exam_identified']/df['text_length']
         return df
@@ -69,7 +70,6 @@ def pre_process(df):
         ('Date Format', FunctionTransformer(date_format_alertP1)),
         ('Replace Blanks', FunctionTransformer(replace_blank)),
         ('Duplicated Entities', FunctionTransformer(entity_duplicated)),
-        ('Lower Case Text ', FunctionTransformer(lowering_text)),
         ('Target Variable', FunctionTransformer(result)),
         #Structured Features
         ('Accepted Before', FunctionTransformer(bef_accepted)),
@@ -78,7 +78,15 @@ def pre_process(df):
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
         ('Unit', FunctionTransformer(unit)),
-        #NLP Features
+        #Dummies
+        ('Dummies', FunctionTransformer(structured_data_dummies)),
+        #Keep only text rows
+        ('Text Only', FunctionTransformer(text_only)),
+        # text cleaning
+        ('Lower Case Text ', FunctionTransformer(lowering_text)),
+        #Sort Values
+        ('Sort Values', FunctionTransformer(sort_values))
+        #NLP meds symptoms...
         ('symptoms_column', FunctionTransformer(symptoms_column)),
         ('exams', FunctionTransformer(exams)),
         ('comorbidities', FunctionTransformer(comorbidities)),
@@ -94,13 +102,16 @@ def pre_process(df):
         ('Symptoms1 Concentration', FunctionTransformer(symptoms1_concentration)),
         ('exams Concentration', FunctionTransformer(exams_concentration)),
         ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
-        ('synonyms', FunctionTransformer(synonyms)),
-        ('Retrieve original text', FunctionTransformer(lowering_text)),
+        # Synonyms
+        #('synonyms', FunctionTransformer(synonyms)),
         ('clean_text', FunctionTransformer(clean_text)),
-        #Dummies
-        ('Dummies', FunctionTransformer(structured_data_dummies)),
-        #Keep only text rows
-        ('Text Only', FunctionTransformer(text_only)),
+        #LDA
+        #('LDA', FunctionTransformer(LDA)),
+        #chi_squared
+        #('Chi_squared', FunctionTransformer(chi_squared)),
+        #bert
+        #('bert', FunctionTransformer(bert)),
+        
         #Sort Values
         ('Sort Values', FunctionTransformer(sort_values))
     ])
