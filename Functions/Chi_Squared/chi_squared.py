@@ -63,3 +63,6 @@ def word_dummy(df, column):
         df[column_name] = df[column_name].astype(float)
     
     return df
+def chi_squared(alertP1):
+    word_dummy(alertP1,"clean_text")
+    return(alertP1)

@@ -10,7 +10,7 @@ from Functions.Models.evaluation import *
 from Functions.NLP.alertp1_nlp import *
 from Functions.NLP.data_with_nlp import *
 from Functions.BERT.bert import *
-
+from Functions.Chi_Squared.chi_squared import *
 
 def pre_process(df):
     #Additional Functions
@@ -84,6 +84,8 @@ def pre_process(df):
         ('Text Only', FunctionTransformer(text_only)),
         # text cleaning
         ('Lower Case Text ', FunctionTransformer(lowering_text)),
+        #Sort Values
+        ('Sort Values', FunctionTransformer(sort_values))
         #NLP meds symptoms...
         ('symptoms_column', FunctionTransformer(symptoms_column)),
         ('exams', FunctionTransformer(exams)),
@@ -105,6 +107,8 @@ def pre_process(df):
         ('clean_text', FunctionTransformer(clean_text)),
         #LDA
         #('LDA', FunctionTransformer(LDA)),
+        #chi_squared
+        #('Chi_squared', FunctionTransformer(chi_squared)),
         #bert
         #('bert', FunctionTransformer(bert)),
         
