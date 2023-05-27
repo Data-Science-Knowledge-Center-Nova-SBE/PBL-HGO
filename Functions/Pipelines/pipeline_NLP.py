@@ -82,6 +82,8 @@ def pre_process(df):
         ('Dummies', FunctionTransformer(structured_data_dummies)),
         #Keep only text rows
         ('Text Only', FunctionTransformer(text_only)),
+        #Sort Values
+        ('Sort Values', FunctionTransformer(sort_values)),
         # text cleaning
         ('Lower Case Text ', FunctionTransformer(lowering_text)),
         
@@ -114,8 +116,7 @@ def pre_process(df):
         ('word2vec', FunctionTransformer(w2v)),
 
         
-        #Sort Values
-        ('Sort Values', FunctionTransformer(sort_values))
+        
     ])
 
     transformed_data = pipeline.fit_transform(df)
