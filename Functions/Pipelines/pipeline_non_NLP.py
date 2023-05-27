@@ -36,8 +36,6 @@ def pre_process(df):
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
         ('Unit', FunctionTransformer(unit)),
-        ('Lower Case Text ', FunctionTransformer(lowering_text)),
-        ('clean_text', FunctionTransformer(clean_text)),
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
         #Keep only text rows

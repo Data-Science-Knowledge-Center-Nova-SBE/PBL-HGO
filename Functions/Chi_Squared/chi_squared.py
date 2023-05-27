@@ -3,29 +3,9 @@ def word_dummy(df, column):
     from fuzzywuzzy import fuzz
     import re
 
-    list = ['nao',
-                'ha',
-                'medicar',
-                'ce',
-                'tac',
-                'familiar',
-                'hta',
-                'alteracoes',
-                'fazer',
-                'agravamento',
-                'avaliacao',
-                'quadro',
-                'ter',
-                'ano',
-                'alteracoe',
-                'neurologia',
-                'mês',
-                'dra',
-                'ap',
-                'realizar',
-                'memoria']
+    #list = ['nao','ha','medicar','ce','tac','familiar','hta','alteracoes','fazer','agravamento','avaliacao','quadro','ter','ano','alteracoe','neurologia','mês','dra','ap','realizar','memoria']
 
-    # selected_words = ['medicar','ce','tac','familiar','hta','alteracoes','fazer','agravamento','avaliacao','quadro','ano','alteracoe','neurologia','dra','realizar','memoria','Medicina','pedir','geral','exame','antecedente','apresentar','episodio','queixa','terapeutico','cognitivo','sintomatologia','frequente','esquerdo','revelar','tc','cefaleia','actual','historia','problema','cerebral','avc','sindrome','progressivo','ligeiro','doenca','dislipidemia','demencial','vascular','tremor','clinico','demencia','dm','frontal','direito','referir','observacao','neurologico','iniciar','temporal','pos','cronico','agravar','orientacao','altura','evolucao','lesao','isquemico','medico','provavel','bilateral','desorientacao','dta','moderar','comportamento','atrofia']
+    list = ['medicar','ce','tac','familiar','hta','alteracoes','fazer','agravamento','avaliacao','quadro','ano','alteracoe','neurologia','dra','realizar','memoria','Medicina','pedir','geral','exame','antecedente','apresentar','episodio','queixa','terapeutico','cognitivo','sintomatologia','frequente','esquerdo','revelar','tc','cefaleia','actual','historia','problema','cerebral','avc','sindrome','progressivo','ligeiro','doenca','dislipidemia','demencial','vascular','tremor','clinico','demencia','dm','frontal','direito','referir','observacao','neurologico','iniciar','temporal','pos','cronico','agravar','orientacao','altura','evolucao','lesao','isquemico','medico','provavel','bilateral','desorientacao','dta','moderar','comportamento','atrofia']
 
     unique_words_regex = []
 
