@@ -162,7 +162,6 @@ def bert_split_referrals(data, reference, model_name = 'sentence-transformers/ms
 
     # Exploding the referrals into sentences
     split_text_df = data[['COD_REFERENCIA', 'clean_text', 'text_length']]
-    split_text_df = split_text_df[split_text_df['text_length'] > 0]
     split_text_df['text_split'] = split_text_df['clean_text'].apply(lambda x: x.split("."))
     split_text_df =  split_text_df.explode('text_split')
 

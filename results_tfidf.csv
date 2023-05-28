@@ -1,0 +1,64 @@
+Rank,Features_used,recall,precision
+1,"caveman_features,bertfeatures,Word2vec_features",0.91,0.7
+2,"caveman_features,LDA_features,bertfeatures,Word2vec_features,tfidf features",0.9,0.71
+2,"caveman_features,LDA_features,bertfeatures,Word2vec_features",0.9,0.71
+4,"LDA_features,bertfeatures,tfidf features",0.89,0.69
+4,"caveman_features,bertfeatures,Word2vec_features,tfidf features",0.89,0.69
+6,"bertfeatures,tfidf features",0.88,0.71
+6,Word2vec_features,0.88,0.7
+12,"caveman_features,tfidf features",0.87,0.73
+12,"non_Nlp,caveman_features",0.87,0.75
+12,bertfeatures,0.87,0.69
+12,"bertfeatures,Word2vec_features,tfidf features",0.87,0.7
+12,"non_Nlp,caveman_features,tfidf features",0.87,0.75
+12,"caveman_features,LDA_features,bertfeatures,tfidf features",0.87,0.71
+12,"caveman_features,LDA_features,Word2vec_features",0.87,0.71
+12,"caveman_features,Word2vec_features,tfidf features",0.87,0.7
+12,"caveman_features,Word2vec_features",0.87,0.7
+19,tfidf features,0.86,0.71
+19,caveman_features,0.86,0.74
+19,"LDA_features,bertfeatures,Word2vec_features,tfidf features",0.86,0.7
+19,"LDA_features,bertfeatures,Word2vec_features",0.86,0.7
+19,"bertfeatures,Word2vec_features",0.86,0.71
+22,"LDA_features,bertfeatures",0.85,0.69
+22,"caveman_features,LDA_features,Word2vec_features,tfidf features",0.85,0.7
+26,"non_Nlp,tfidf features",0.84,0.74
+26,"non_Nlp,LDA_features,bertfeatures,Word2vec_features",0.84,0.73
+26,"caveman_features,bertfeatures,tfidf features",0.84,0.69
+26,"Word2vec_features,tfidf features",0.84,0.71
+26,"non_Nlp,LDA_features,bertfeatures,Word2vec_features,tfidf features",0.84,0.73
+30,"non_Nlp,caveman_features,bertfeatures,Word2vec_features",0.83,0.73
+30,"caveman_features,LDA_features,bertfeatures",0.83,0.7
+30,"non_Nlp,caveman_features,bertfeatures,Word2vec_features,tfidf features",0.83,0.73
+30,"LDA_features,tfidf features",0.83,0.72
+38,"non_Nlp,caveman_features,Word2vec_features",0.82,0.74
+38,"non_Nlp,LDA_features,bertfeatures,tfidf features",0.82,0.72
+38,"non_Nlp,LDA_features,bertfeatures",0.82,0.7
+38,"non_Nlp,LDA_features,Word2vec_features",0.82,0.72
+38,"non_Nlp,LDA_features",0.82,0.75
+38,"non_Nlp,bertfeatures",0.82,0.74
+38,"non_Nlp,caveman_features,Word2vec_features,tfidf features",0.82,0.74
+38,"non_Nlp,bertfeatures,tfidf features",0.82,0.74
+38,"non_Nlp,Word2vec_features,tfidf features",0.82,0.75
+38,"non_Nlp,Word2vec_features",0.82,0.75
+38,"LDA_features,Word2vec_features,tfidf features",0.82,0.69
+38,"caveman_features,LDA_features",0.82,0.72
+49,"non_Nlp,caveman_features,LDA_features,bertfeatures,Word2vec_features",0.81,0.76
+49,"non_Nlp,caveman_features,LDA_features",0.81,0.79
+49,"non_Nlp,caveman_features,LDA_features,bertfeatures,Word2vec_features,tfidf features",0.81,0.76
+49,"non_Nlp,LDA_features,Word2vec_features,tfidf features",0.81,0.72
+49,"non_Nlp,bertfeatures,Word2vec_features,tfidf features",0.81,0.74
+49,"non_Nlp,bertfeatures,Word2vec_features",0.81,0.74
+49,"caveman_features,LDA_features,tfidf features",0.81,0.72
+49,"caveman_features,bertfeatures",0.81,0.69
+49,"LDA_features,Word2vec_features",0.81,0.69
+56,"non_Nlp,caveman_features,bertfeatures",0.8,0.74
+56,"non_Nlp,caveman_features,bertfeatures,tfidf features",0.8,0.74
+56,"non_Nlp,caveman_features,LDA_features,tfidf features",0.8,0.79
+56,"non_Nlp,caveman_features,LDA_features,bertfeatures",0.8,0.74
+56,"non_Nlp,caveman_features,LDA_features,bertfeatures,tfidf features",0.8,0.74
+59,non_Nlp,0.79,0.78
+60,"non_Nlp,caveman_features,LDA_features,Word2vec_features",0.78,0.78
+60,"non_Nlp,caveman_features,LDA_features,Word2vec_features,tfidf features",0.78,0.78
+62,"non_Nlp,LDA_features,tfidf features",0.75,0.76
+62,LDA_features,0.75,0.7
