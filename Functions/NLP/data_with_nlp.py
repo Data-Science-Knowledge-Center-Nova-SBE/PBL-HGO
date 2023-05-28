@@ -1,44 +1,46 @@
 from Functions.NLP.alertp1_nlp import *
 from Functions.BERT.bert import *
+from Functions.NLP.TF_IDF import *
 
 ### NLP ###
 def lowering_text(alertP1):
-    lower_text(alertP1,"Texto","clean_text")
+    lower_text(alertP1,"Texto","clean_text_caveman")
     return(alertP1)
 def clean_text(alertP1):
+   lower_text(alertP1,"Texto","clean_text")
    remove_stop_words(alertP1, "clean_text", "clean_text")
    spacy_lemmatizer(alertP1, "clean_text", "clean_text")
    return(alertP1)
 #Medications
 def medication_column(alertP1):
-   categorize_medication(alertP1,"clean_text", "Data/drugs_data_big2.xlsx", 80)
-   add_textcount_columns(alertP1,"clean_text","medication_level_1")
-   add_textcount_columns(alertP1,"clean_text","medication_level_2")
-   add_textcount_columns(alertP1,"clean_text","medication_level_3")   
+   categorize_medication(alertP1,"clean_text_caveman", "Data/drugs_data_big2.xlsx", 80)
+   add_textcount_columns(alertP1,"clean_text_caveman","medication_level_1")
+   add_textcount_columns(alertP1,"clean_text_caveman","medication_level_2")
+   add_textcount_columns(alertP1,"clean_text_caveman","medication_level_3")   
    return(alertP1)
 #Symptoms
 def symptoms_column(alertP1):
-   categorize_symptoms(alertP1,"clean_text", "Data/symptoms_data.xlsx", 80)
-   add_textcount_columns(alertP1,"clean_text","symptom_1")
-   add_textcount_columns(alertP1,"clean_text","symptom_0")  
+   categorize_symptoms(alertP1,"clean_text_caveman", "Data/symptoms_data.xlsx", 80)
+   add_textcount_columns(alertP1,"clean_text_caveman","symptom_1")
+   add_textcount_columns(alertP1,"clean_text_caveman","symptom_0")  
    return(alertP1)
 def symptoms_column2(alertP1):
-   categorize_symptoms_simple(alertP1,"clean_text", "Data/symptoms_data_big.xlsx", 80)
-   add_textcount_columns(alertP1,"clean_text","symptom_identified") 
+   categorize_symptoms_simple(alertP1,"clean_text_caveman", "Data/symptoms_data_big.xlsx", 80)
+   add_textcount_columns(alertP1,"clean_text_caveman","symptom_identified") 
    return(alertP1)
 def exams(alertP1):
-   categorize_exams(alertP1,"clean_text", "Data/exams_data.xlsx", 95)
-   add_textcount_columns(alertP1,"clean_text","exam_identified") 
+   categorize_exams(alertP1,"clean_text_caveman", "Data/exams_data.xlsx", 95)
+   add_textcount_columns(alertP1,"clean_text_caveman","exam_identified") 
    return(alertP1)
 def comorbidities(alertP1):
-   categorize_comorbidities(alertP1,"clean_text", "Data/comorbidities_data.xlsx", 85)
-   add_textcount_columns(alertP1,"clean_text","comorbidity_identified") 
+   categorize_comorbidities(alertP1,"clean_text_caveman", "Data/comorbidities_data.xlsx", 85)
+   add_textcount_columns(alertP1,"clean_text_caveman","comorbidity_identified") 
    return(alertP1)
 def synonyms(alertP1):
-   check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text", 80, process_all=True)
+   check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text_caveman", 80, process_all=True)
    return(alertP1)
 def LDA(alertP1):
-   train_and_predict_lda(alertP1, n_components=3, learning_decay=0.5, random_state=16)
+   train_and_predict_lda(alertP1, 'clean_text',n_components=3, learning_decay=0.5, random_state=16)
    return(alertP1) 
 
 def bert(alertP1):
@@ -62,11 +64,8 @@ import math
 from gensim.models import Word2Vec
 import numpy as np
 def w2v(alertP1):
-    #alertP1= pre_process(alertP1)
-    
     # Split data into train and test
-    alertP1=alertP1[alertP1['text_length']>0]
-    AlertP1_sorted = alertP1[alertP1['clean_text']!=''].sort_values(by='DATA_RECEPCAO')
+    AlertP1_sorted = alertP1.sort_values(by='DATA_RECEPCAO')
 
     # calculate the index for the split
     split_index = math.ceil(0.8 * len(AlertP1_sorted))
@@ -102,3 +101,6 @@ def w2v(alertP1):
     alertP1[[f"dim_{i+1}" for i in range(num_dimensions)]] = pd.DataFrame(vectors.tolist(), index=alertP1.index)# Remove the original "word2vec_feature" column
     alertP1.drop("word2vec_feature", axis=1, inplace=True)
     return(alertP1)
+def tfidf(alertP1):
+   alertP1=calculate_presence(alertP1,'clean_text')
+   return (alertP1)
