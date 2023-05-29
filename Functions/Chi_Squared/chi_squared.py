@@ -1,31 +1,11 @@
 def word_dummy(df, column):
-
+    
     from fuzzywuzzy import fuzz
     import re
+    df['chi_squared']=df[column]
+    #list = ['nao','ha','medicar','ce','tac','familiar','hta','alteracoes','fazer','agravamento','avaliacao','quadro','ter','ano','alteracoe','neurologia','mês','dra','ap','realizar','memoria']
 
-    list = ['nao',
-                'ha',
-                'medicar',
-                'ce',
-                'tac',
-                'familiar',
-                'hta',
-                'alteracoes',
-                'fazer',
-                'agravamento',
-                'avaliacao',
-                'quadro',
-                'ter',
-                'ano',
-                'alteracoe',
-                'neurologia',
-                'mês',
-                'dra',
-                'ap',
-                'realizar',
-                'memoria']
-
-    # selected_words = ['medicar','ce','tac','familiar','hta','alteracoes','fazer','agravamento','avaliacao','quadro','ano','alteracoe','neurologia','dra','realizar','memoria','Medicina','pedir','geral','exame','antecedente','apresentar','episodio','queixa','terapeutico','cognitivo','sintomatologia','frequente','esquerdo','revelar','tc','cefaleia','actual','historia','problema','cerebral','avc','sindrome','progressivo','ligeiro','doenca','dislipidemia','demencial','vascular','tremor','clinico','demencia','dm','frontal','direito','referir','observacao','neurologico','iniciar','temporal','pos','cronico','agravar','orientacao','altura','evolucao','lesao','isquemico','medico','provavel','bilateral','desorientacao','dta','moderar','comportamento','atrofia']
+    list = ['medicar','ce','tac','familiar','hta','alteracoes','fazer','agravamento','avaliacao','quadro','ano','alteracoe','neurologia','dra','realizar','memoria','Medicina','pedir','geral','exame','antecedente','apresentar','episodio','queixa','terapeutico','cognitivo','sintomatologia','frequente','esquerdo','revelar','tc','cefaleia','actual','historia','problema','cerebral','avc','sindrome','progressivo','ligeiro','doenca','dislipidemia','demencial','vascular','tremor','clinico','demencia','dm','frontal','direito','referir','observacao','neurologico','iniciar','temporal','pos','cronico','agravar','orientacao','altura','evolucao','lesao','isquemico','medico','provavel','bilateral','desorientacao','dta','moderar','comportamento','atrofia']
 
     unique_words_regex = []
 
@@ -44,7 +24,7 @@ def word_dummy(df, column):
         column_name = column_name.replace('[\W\s]{1})', '')
 
         # Loop through the column and check if the word is in the text
-        for i in df[column]:
+        for i in df['chi_squared']:
 
             matches = re.findall(d, i)
             matches_count = len(matches)
@@ -59,7 +39,7 @@ def word_dummy(df, column):
                 metric = matches_count/number_words
             list_len.append(metric)
         
-        df[column_name] = list_len  # df[column].str.contains(d)
+        df[column_name] = list_len  
         df[column_name] = df[column_name].astype(float)
     
     return df
