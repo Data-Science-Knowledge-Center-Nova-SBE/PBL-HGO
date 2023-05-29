@@ -40,7 +40,7 @@ def synonyms(alertP1):
    check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text_caveman", 80, process_all=True)
    return(alertP1)
 def LDA(alertP1):
-   train_and_predict_lda(alertP1, 'clean_text',n_components=3, learning_decay=0.5, random_state=16)
+   train_and_predict_lda(alertP1, 'clean_text',n_components=2, learning_decay=0.5, random_state=16)
    return(alertP1) 
 
 def bert(alertP1):
