@@ -177,3 +177,39 @@ def evaluate_thresholds(y_pred_train, y_train, y_pred_test, y_test, metrics = "t
     
     df = pd.DataFrame(data)
     return df
+
+def plot_selection_rates(X_test, y_test, y_pred, ncols=3, hspace=0.5):
+    from fairlearn.metrics import MetricFrame, selection_rate
+    
+    #y_pred must be binary!!!
+    #Hint to transform into binary:
+    #thresholds = np.linspace(0, 1, 100)
+    #kappas = [cohen_kappa_score(y_train, (y_pred_train >= t).astype(int)) for t in thresholds]
+    #kappa_threshold = thresholds[np.argmax(kappas)]
+    #kappa_y_pred_binary = (y_pred_test >= kappa_threshold).astype(int)
+
+    cols = ['outside area', 'SAM', 'SON', 'unknown', 'Other specialities', '2', '3+', 'HOSP', 'UCSP', 'USF A', 'USF B', 'outro', 'not accepted before']
+
+    # Get the number of columns to plot
+    n_cols = len(cols)
+    
+    # Calculate the number of rows needed to arrange the subplots in a grid with ncols columns
+    nrows = math.ceil(n_cols / ncols)
+    
+    # Create a figure with nrows rows and ncols columns of subplots
+    fig, axs = plt.subplots(nrows, ncols, figsize=(5*ncols, 5*nrows))
+    
+    # Flatten the axs array to make it easier to index
+    axs = axs.flatten()
+    
+    # Loop over the specified columns
+    for i, col in enumerate(cols):
+        # Create a MetricFrame object for the current column
+        mf = MetricFrame(metrics=selection_rate, y_true=y_test, y_pred=y_pred, sensitive_features=X_test[col])
+        
+        # Plot the selection rates for each group within the current column
+        mf.by_group.plot.bar(ax=axs[i], title=f'Selection Rates by {col}')
+    
+    # Add space between the rows of subplots
+    plt.subplots_adjust(hspace=hspace)
+    plt.show()
