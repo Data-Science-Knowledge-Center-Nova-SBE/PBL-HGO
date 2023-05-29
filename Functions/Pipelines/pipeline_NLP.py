@@ -107,13 +107,13 @@ def pre_process(df):
         #('synonyms', FunctionTransformer(synonyms)),
 
         #lemmatizating and removing stop words
-        #('clean_text', FunctionTransformer(clean_text)),
+        ('clean_text', FunctionTransformer(clean_text)),
         #LDA
         #('LDA', FunctionTransformer(LDA)),
         #chi_squared
         #('Chi_squared', FunctionTransformer(chi_squared)),
         #TFidf
-        #('tfidf', FunctionTransformer(tfidf)),
+        ('tfidf', FunctionTransformer(tfidf)),
         #bert
         #('bert', FunctionTransformer(bert)),
         #word2vec
