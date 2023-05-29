@@ -85,33 +85,33 @@ def pre_process(df):
         #Sort Values
         ('Sort Values', FunctionTransformer(sort_values)),
         # text cleaning
-        #('Lower Case Text ', FunctionTransformer(lowering_text)),
+        ('Lower Case Text ', FunctionTransformer(lowering_text)),
         
         #NLP meds symptoms...
-        #('symptoms_column', FunctionTransformer(symptoms_column)),
-        #('exams', FunctionTransformer(exams)),
-        #('comorbidities', FunctionTransformer(comorbidities)),
-        #('medication_column', FunctionTransformer(medication_column)),
-        #('Medication Total Count', FunctionTransformer(medication_count)),
-        #('Medication Concentration', FunctionTransformer(medication_concentration)),
-        #('Medication1 Concentration', FunctionTransformer(medication1_concentration)),
-        #('Medication2 Concentration', FunctionTransformer(medication2_concentration)),
-        #('Medication3 Concentration', FunctionTransformer(medication3_concentration)),
-        #('Symptoms Total Count', FunctionTransformer(symptoms_count)),
-        #('Symptoms Concentration', FunctionTransformer(symptoms_concentration)),
-        #('Symptoms0 Concentration', FunctionTransformer(symptoms0_concentration)),
-        #('Symptoms1 Concentration', FunctionTransformer(symptoms1_concentration)),
-        #('exams Concentration', FunctionTransformer(exams_concentration)),
-        #('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
+        ('symptoms_column', FunctionTransformer(symptoms_column)),
+        ('exams', FunctionTransformer(exams)),
+        ('comorbidities', FunctionTransformer(comorbidities)),
+        ('medication_column', FunctionTransformer(medication_column)),
+        ('Medication Total Count', FunctionTransformer(medication_count)),
+        ('Medication Concentration', FunctionTransformer(medication_concentration)),
+        ('Medication1 Concentration', FunctionTransformer(medication1_concentration)),
+        ('Medication2 Concentration', FunctionTransformer(medication2_concentration)),
+        ('Medication3 Concentration', FunctionTransformer(medication3_concentration)),
+        ('Symptoms Total Count', FunctionTransformer(symptoms_count)),
+        ('Symptoms Concentration', FunctionTransformer(symptoms_concentration)),
+        ('Symptoms0 Concentration', FunctionTransformer(symptoms0_concentration)),
+        ('Symptoms1 Concentration', FunctionTransformer(symptoms1_concentration)),
+        ('exams Concentration', FunctionTransformer(exams_concentration)),
+        ('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
         # Synonyms
-        #('synonyms', FunctionTransformer(synonyms)),
+        ('synonyms', FunctionTransformer(synonyms)),
 
         #lemmatizating and removing stop words
-        #('clean_text', FunctionTransformer(clean_text)),
+        ('clean_text', FunctionTransformer(clean_text)),
         #LDA
         #('LDA', FunctionTransformer(LDA)),
         #chi_squared
-        #('Chi_squared', FunctionTransformer(chi_squared)),
+        ('Chi_squared', FunctionTransformer(chi_squared)),
         #TFidf
         #('tfidf', FunctionTransformer(tfidf)),
         #bert
