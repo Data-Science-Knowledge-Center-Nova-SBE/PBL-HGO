@@ -110,11 +110,11 @@ def pre_process(df):
         #LDA
         #('LDA', FunctionTransformer(LDA)),
         #chi_squared
-        ('Chi_squared', FunctionTransformer(chi_squared)),
+        #('Chi_squared', FunctionTransformer(chi_squared)),
         #bert
         #('bert', FunctionTransformer(bert)),
         #word2vec
-        #('word2vec', FunctionTransformer(w2v)),
+        ('word2vec', FunctionTransformer(w2v)),
         #TFidf
         #('tfidf', FunctionTransformer(tfidf)),
 
