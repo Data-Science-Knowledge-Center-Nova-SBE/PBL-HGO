@@ -85,7 +85,7 @@ def pre_process(df):
         #Sort Values
         ('Sort Values', FunctionTransformer(sort_values)),
         # text cleaning
-        ('Lower Case Text ', FunctionTransformer(lowering_text)),
+        #('Lower Case Text ', FunctionTransformer(lowering_text)),
         
         #NLP meds symptoms...
         #('symptoms_column', FunctionTransformer(symptoms_column)),
@@ -107,7 +107,7 @@ def pre_process(df):
         #('synonyms', FunctionTransformer(synonyms)),
 
         #lemmatizating and removing stop words
-        ('clean_text', FunctionTransformer(clean_text)),
+        #('clean_text', FunctionTransformer(clean_text)),
         #LDA
         #('LDA', FunctionTransformer(LDA)),
         #chi_squared
@@ -115,9 +115,9 @@ def pre_process(df):
         #TFidf
         #('tfidf', FunctionTransformer(tfidf)),
         #bert
-        ('bert', FunctionTransformer(bert)),
+        #('bert', FunctionTransformer(bert)),
         #word2vec
-        ('word2vec', FunctionTransformer(w2v)),
+        #('word2vec', FunctionTransformer(w2v)),
         
 
         
