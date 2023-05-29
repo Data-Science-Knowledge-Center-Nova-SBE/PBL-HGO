@@ -85,7 +85,7 @@ def pre_process(df):
         #Sort Values
         ('Sort Values', FunctionTransformer(sort_values)),
         # text cleaning
-        ('Lower Case Text1 ', FunctionTransformer(lowering_text)),
+        ('Lower Case Text ', FunctionTransformer(lowering_text)),
         
         #NLP meds symptoms...
         #('symptoms_column', FunctionTransformer(symptoms_column)),
@@ -105,18 +105,20 @@ def pre_process(df):
         #('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
         # Synonyms
         #('synonyms', FunctionTransformer(synonyms)),
+
         #lemmatizating and removing stop words
         ('clean_text', FunctionTransformer(clean_text)),
         #LDA
         #('LDA', FunctionTransformer(LDA)),
         #chi_squared
         #('Chi_squared', FunctionTransformer(chi_squared)),
-        #bert
-        #('bert', FunctionTransformer(bert)),
-        #word2vec
-        ('word2vec', FunctionTransformer(w2v)),
         #TFidf
         #('tfidf', FunctionTransformer(tfidf)),
+        #bert
+        ('bert', FunctionTransformer(bert)),
+        #word2vec
+        ('word2vec', FunctionTransformer(w2v)),
+        
 
         
         

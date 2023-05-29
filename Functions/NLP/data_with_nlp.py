@@ -76,9 +76,8 @@ def w2v(alertP1):
 
     #Converting text into list of sentences
     sentences = train_set['clean_text'].tolist()
-
     #W2V model building
-    model = Word2Vec(sentences, window=3, min_count=5, workers=4,sg=0,alpha=0.01)  # Adjust parameters as needed
+    model = Word2Vec(sentences, window=3, min_count=5, workers=1,sg=0,alpha=0.01)  # Adjust parameters as needed
     
     #Featurization
     def get_sentence_vector(sentence):
