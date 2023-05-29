@@ -14,23 +14,20 @@ def xgb_classifier(features, target):
     # split X and y into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2,random_state=16,shuffle=False)
 
-    #X_train['before_accepted'] = X_train['before_accepted'].astype('category')
-    #X_test['before_accepted'] = X_test['before_accepted'].astype('category')
-
     # Convert data into DMatrix format
     dtrain = xgb.DMatrix(X_train, label=y_train, enable_categorical = True)
     dtest = xgb.DMatrix(X_test, enable_categorical = True)
 
     # Set parameters for the XGBoost model
     param = {
-        'max_depth': 3,
-        'eta': 0.3,
+        'max_depth': 2,
+        'eta': 0.4,
         'objective': 'binary:logistic',
         'seed': 16
     }
 
     # Train the model
-    num_round = 10
+    num_round = 6
     bst = xgb.train(param, dtrain, num_round)
 
     # Make preictions on the train set
