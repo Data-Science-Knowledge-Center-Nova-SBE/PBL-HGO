@@ -13,31 +13,28 @@ def clean_text(alertP1):
    return(alertP1)
 #Medications
 def medication_column(alertP1):
-   categorize_medication(alertP1,"clean_text_caveman", "Data/drugs_data_big2.xlsx", 80)
+   categorize_medication(alertP1,"clean_text_caveman", "src/pre_processing/features_creation/data/list_medications.xlsx", 80)
    add_textcount_columns(alertP1,"clean_text_caveman","medication_level_1")
    add_textcount_columns(alertP1,"clean_text_caveman","medication_level_2")
    add_textcount_columns(alertP1,"clean_text_caveman","medication_level_3")   
    return(alertP1)
 #Symptoms
 def symptoms_column(alertP1):
-   categorize_symptoms(alertP1,"clean_text_caveman", "Data/symptoms_data.xlsx", 80)
+   categorize_symptoms(alertP1,"clean_text_caveman", "src/pre_processing/features_creation/data/list_symptoms.xlsx", 80)
    add_textcount_columns(alertP1,"clean_text_caveman","symptom_1")
    add_textcount_columns(alertP1,"clean_text_caveman","symptom_0")  
    return(alertP1)
-def symptoms_column2(alertP1):
-   categorize_symptoms_simple(alertP1,"clean_text_caveman", "Data/symptoms_data_big.xlsx", 80)
-   add_textcount_columns(alertP1,"clean_text_caveman","symptom_identified") 
-   return(alertP1)
+
 def exams(alertP1):
-   categorize_exams(alertP1,"clean_text_caveman", "Data/exams_data.xlsx", 95)
+   categorize_exams(alertP1,"clean_text_caveman", "src/pre_processing/features_creation/data/list_exams.xlsx", 95)
    add_textcount_columns(alertP1,"clean_text_caveman","exam_identified") 
    return(alertP1)
 def comorbidities(alertP1):
-   categorize_comorbidities(alertP1,"clean_text_caveman", "Data/comorbidities_data.xlsx", 85)
+   categorize_comorbidities(alertP1,"clean_text_caveman", "src/pre_processing/features_creation/data/list_comorbidities.xlsx", 85)
    add_textcount_columns(alertP1,"clean_text_caveman","comorbidity_identified") 
    return(alertP1)
 def synonyms(alertP1):
-   check_synonyms("Data/synonyms_dict.xlsx", alertP1, "clean_text_caveman", 80, process_all=True)
+   check_synonyms("Data/synonyms_dict.xlsx", alertP1, "src/pre_processing/features_creation/data/list_concepts.xlsx", 80, process_all=True)
    return(alertP1)
 def LDA(alertP1):
    train_and_predict_lda(alertP1, 'clean_text',n_components=2, learning_decay=0.5, random_state=16)
