@@ -1,0 +1,64 @@
+Rank,Features_used,recall train,precision train,recall test,precision test
+1,"tfidf ,Word2vec",0.95,0.83,0.93,0.69
+2,"wordsearch,LDA,Word2vec",0.94,0.85,0.92,0.7
+3,"bert,Word2vec",0.91,0.86,0.91,0.72
+3,"non_Nlp,LDA,tfidf ,Word2vec",0.94,0.83,0.91,0.72
+5,"wordsearch,LDA,tfidf ,Word2vec",0.93,0.85,0.91,0.7
+6,"wordsearch,Word2vec",0.92,0.85,0.9,0.7
+6,"wordsearch,tfidf ,Word2vec",0.93,0.86,0.9,0.7
+8,"LDA,tfidf ,bert",0.94,0.85,0.89,0.69
+9,"tfidf ,bert",0.9,0.86,0.88,0.71
+9,"tfidf ,bert,Word2vec",0.91,0.86,0.88,0.71
+11,"LDA,bert,Word2vec",0.92,0.86,0.88,0.7
+11,"LDA,tfidf ,bert,Word2vec",0.92,0.86,0.88,0.7
+13,"non_Nlp,wordsearch",0.87,0.85,0.87,0.75
+13,"non_Nlp,wordsearch,tfidf ",0.88,0.85,0.87,0.75
+15,"non_Nlp,LDA,Word2vec",0.9,0.84,0.87,0.74
+16,"wordsearch,tfidf ",0.85,0.85,0.87,0.73
+17,Word2vec,0.92,0.84,0.87,0.7
+18,bert,0.93,0.84,0.87,0.69
+19,wordsearch,0.83,0.84,0.86,0.74
+19,"non_Nlp,LDA,tfidf ,bert,Word2vec",0.89,0.85,0.86,0.74
+21,"wordsearch,bert,Word2vec",0.87,0.87,0.86,0.72
+21,"wordsearch,tfidf ,bert,Word2vec",0.87,0.87,0.86,0.72
+23,tfidf ,0.77,0.8,0.86,0.71
+24,"LDA,bert",0.91,0.85,0.85,0.69
+27,"non_Nlp,tfidf ",0.87,0.83,0.84,0.74
+27,"non_Nlp,wordsearch,Word2vec",0.88,0.87,0.84,0.74
+27,"non_Nlp,wordsearch,tfidf ,Word2vec",0.88,0.87,0.84,0.74
+27,"non_Nlp,wordsearch,LDA,Word2vec",0.88,0.86,0.84,0.74
+27,"non_Nlp,wordsearch,LDA,tfidf ,Word2vec",0.88,0.86,0.84,0.74
+30,"wordsearch,tfidf ,bert",0.89,0.87,0.84,0.69
+31,"non_Nlp,wordsearch,LDA,bert,Word2vec",0.89,0.87,0.83,0.74
+31,"non_Nlp,wordsearch,LDA,tfidf ,bert,Word2vec",0.89,0.87,0.83,0.74
+33,"LDA,tfidf ",0.84,0.84,0.83,0.72
+34,"non_Nlp,Word2vec",0.88,0.87,0.82,0.76
+34,"non_Nlp,tfidf ,Word2vec",0.88,0.87,0.82,0.76
+36,"non_Nlp,LDA",0.84,0.84,0.82,0.75
+37,"non_Nlp,bert",0.86,0.87,0.82,0.74
+37,"non_Nlp,tfidf ,bert",0.86,0.87,0.82,0.74
+40,"wordsearch,LDA",0.84,0.84,0.82,0.72
+40,"wordsearch,LDA,bert,Word2vec",0.87,0.89,0.82,0.72
+40,"wordsearch,LDA,tfidf ,bert,Word2vec",0.87,0.89,0.82,0.72
+40,"non_Nlp,LDA,tfidf ,bert",0.87,0.87,0.82,0.72
+43,"wordsearch,LDA,bert",0.85,0.9,0.82,0.71
+43,"wordsearch,LDA,tfidf ,bert",0.85,0.9,0.82,0.71
+45,"non_Nlp,LDA,bert",0.89,0.86,0.82,0.7
+46,"non_Nlp,wordsearch,LDA",0.82,0.88,0.81,0.79
+48,"non_Nlp,bert,Word2vec",0.88,0.88,0.81,0.75
+48,"non_Nlp,tfidf ,bert,Word2vec",0.88,0.88,0.81,0.75
+48,"non_Nlp,wordsearch,bert,Word2vec",0.86,0.89,0.81,0.75
+48,"non_Nlp,wordsearch,tfidf ,bert,Word2vec",0.86,0.89,0.81,0.75
+51,"wordsearch,LDA,tfidf ",0.84,0.84,0.81,0.72
+52,"wordsearch,bert",0.87,0.88,0.81,0.69
+53,"non_Nlp,wordsearch,LDA,tfidf ",0.82,0.88,0.8,0.79
+55,"non_Nlp,wordsearch,bert",0.86,0.89,0.8,0.74
+55,"non_Nlp,wordsearch,tfidf ,bert",0.86,0.89,0.8,0.74
+55,"non_Nlp,wordsearch,LDA,bert",0.88,0.88,0.8,0.74
+55,"non_Nlp,wordsearch,LDA,tfidf ,bert",0.88,0.88,0.8,0.74
+58,non_Nlp,0.81,0.85,0.79,0.78
+59,"non_Nlp,LDA,bert,Word2vec",0.84,0.87,0.79,0.75
+60,"non_Nlp,LDA,tfidf ",0.79,0.87,0.75,0.76
+61,"LDA,Word2vec",0.88,0.87,0.75,0.71
+62,LDA,0.88,0.81,0.75,0.7
+63,"LDA,tfidf ,Word2vec",0.85,0.89,0.74,0.71

@@ -9,11 +9,6 @@ from Functions.AlertP1.dummy_features import *
 from Functions.Models.evaluation import *
 from Functions.NLP.alertp1_nlp import *
 from Functions.NLP.data_with_nlp import *
-<<<<<<< HEAD
-=======
-from Functions.BERT.bert import *
-from Functions.Chi_Squared.chi_squared import *
->>>>>>> origin/marouan
 
 def pre_process(df):
     #Additional Functions
@@ -59,6 +54,7 @@ def pre_process(df):
         df['symptoms0_concentration']=df['symptom_0']/df['text_length']
         return df
 
+
     def exams_concentration(df):
         df['exams_concentration']=df['exam_identified']/df['text_length']
         return df
@@ -73,10 +69,7 @@ def pre_process(df):
         ('Date Format', FunctionTransformer(date_format_alertP1)),
         ('Replace Blanks', FunctionTransformer(replace_blank)),
         ('Duplicated Entities', FunctionTransformer(entity_duplicated)),
-<<<<<<< HEAD
         ('Lower Case Text ', FunctionTransformer(lowering_text)),
-=======
->>>>>>> origin/marouan
         ('Target Variable', FunctionTransformer(result)),
         #Structured Features
         ('Accepted Before', FunctionTransformer(bef_accepted)),
@@ -85,7 +78,6 @@ def pre_process(df):
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
         ('Unit', FunctionTransformer(unit)),
-<<<<<<< HEAD
         #NLP Features
         ('symptoms_column', FunctionTransformer(symptoms_column)),
         ('exams', FunctionTransformer(exams)),
@@ -105,56 +97,12 @@ def pre_process(df):
         ('synonyms', FunctionTransformer(synonyms)),
         ('Retrieve original text', FunctionTransformer(lowering_text)),
         ('clean_text', FunctionTransformer(clean_text)),
-=======
->>>>>>> origin/marouan
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
         #Keep only text rows
         ('Text Only', FunctionTransformer(text_only)),
         #Sort Values
-<<<<<<< HEAD
         ('Sort Values', FunctionTransformer(sort_values))
-=======
-        ('Sort Values', FunctionTransformer(sort_values)),
-        # text cleaning
-        #('Lower Case Text ', FunctionTransformer(lowering_text)),
-        
-        #NLP meds symptoms...
-        #('symptoms_column', FunctionTransformer(symptoms_column)),
-        #('exams', FunctionTransformer(exams)),
-        #('comorbidities', FunctionTransformer(comorbidities)),
-        #('medication_column', FunctionTransformer(medication_column)),
-        #('Medication Total Count', FunctionTransformer(medication_count)),
-        #('Medication Concentration', FunctionTransformer(medication_concentration)),
-        #('Medication1 Concentration', FunctionTransformer(medication1_concentration)),
-        #('Medication2 Concentration', FunctionTransformer(medication2_concentration)),
-        #('Medication3 Concentration', FunctionTransformer(medication3_concentration)),
-        #('Symptoms Total Count', FunctionTransformer(symptoms_count)),
-        #('Symptoms Concentration', FunctionTransformer(symptoms_concentration)),
-        #('Symptoms0 Concentration', FunctionTransformer(symptoms0_concentration)),
-        #('Symptoms1 Concentration', FunctionTransformer(symptoms1_concentration)),
-        #('exams Concentration', FunctionTransformer(exams_concentration)),
-        #('comorbidities Concentration', FunctionTransformer(comorbidities_concentration)),
-        # Synonyms
-        #('synonyms', FunctionTransformer(synonyms)),
-
-        #lemmatizating and removing stop words
-        ('clean_text', FunctionTransformer(clean_text)),
-        #LDA
-        #('LDA', FunctionTransformer(LDA)),
-        #chi_squared
-        #('Chi_squared', FunctionTransformer(chi_squared)),
-        #TFidf
-        ('tfidf', FunctionTransformer(tfidf)),
-        #bert
-        #('bert', FunctionTransformer(bert)),
-        #word2vec
-        #('word2vec', FunctionTransformer(w2v)),
-        
-
-        
-        
->>>>>>> origin/marouan
     ])
 
     transformed_data = pipeline.fit_transform(df)
