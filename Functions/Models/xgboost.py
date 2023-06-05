@@ -14,23 +14,35 @@ def xgb_classifier(features, target):
     # split X and y into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2,random_state=16,shuffle=False)
 
+<<<<<<< HEAD
     #X_train['before_accepted'] = X_train['before_accepted'].astype('category')
     #X_test['before_accepted'] = X_test['before_accepted'].astype('category')
 
+=======
+>>>>>>> origin/marouan
     # Convert data into DMatrix format
     dtrain = xgb.DMatrix(X_train, label=y_train, enable_categorical = True)
     dtest = xgb.DMatrix(X_test, enable_categorical = True)
 
     # Set parameters for the XGBoost model
     param = {
+<<<<<<< HEAD
         'max_depth': 3,
         'eta': 0.3,
+=======
+        'max_depth': 2,
+        'eta': 0.4,
+>>>>>>> origin/marouan
         'objective': 'binary:logistic',
         'seed': 16
     }
 
     # Train the model
+<<<<<<< HEAD
     num_round = 10
+=======
+    num_round = 6
+>>>>>>> origin/marouan
     bst = xgb.train(param, dtrain, num_round)
 
     # Make preictions on the train set
@@ -41,6 +53,7 @@ def xgb_classifier(features, target):
     return y_pred_train, y_pred_test, bst.get_score(), X_train, X_test, y_train, y_test      
 
 
+<<<<<<< HEAD
 def evaluate_thresholds(y_pred_train, y_train, y_pred_test, y_test, metrics = "test", k=211):
     #Precion@k
     def precision_at_k(y_true, y_pred, k):
@@ -213,3 +226,5 @@ def plot_selection_rates(X_test, y_test, y_pred, ncols=3, hspace=0.5):
     # Add space between the rows of subplots
     plt.subplots_adjust(hspace=hspace)
     plt.show()
+=======
+>>>>>>> origin/marouan

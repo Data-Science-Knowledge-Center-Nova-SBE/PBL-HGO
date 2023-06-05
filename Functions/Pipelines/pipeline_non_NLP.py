@@ -7,7 +7,11 @@ from Functions.AlertP1.features import *
 from Functions.analysis.step_analysis import *
 from Functions.AlertP1.dummy_features import *
 from Functions.Models.evaluation import *
+<<<<<<< HEAD
 
+=======
+from Functions.NLP.data_with_nlp import *
+>>>>>>> origin/marouan
 
 def pre_process(df):
     #Additional Functions
@@ -15,6 +19,12 @@ def pre_process(df):
     def sort_values(df):
         df = df.sort_values('DATA_RECEPCAO')
         return df
+<<<<<<< HEAD
+=======
+    def text_only(df):
+        df=df[df['text_length']>0]
+        return df
+>>>>>>> origin/marouan
 
    
 
@@ -32,6 +42,7 @@ def pre_process(df):
         ('Text Length', FunctionTransformer(text_length)),
         ('Referral Steps', FunctionTransformer(referral_steps)),
         ('Speciality', FunctionTransformer(speciality)),
+<<<<<<< HEAD
         ('Unit', FunctionTransformer(unit)),è
         #Dummies
         ('Dummies', FunctionTransformer(structured_data_dummies)),
@@ -39,6 +50,16 @@ def pre_process(df):
         ('Sort Values', FunctionTransformer(sort_values))
     ])
 
+=======
+        ('Unit', FunctionTransformer(unit)),
+        #Dummies
+        ('Dummies', FunctionTransformer(structured_data_dummies)),
+        #Keep only text rows
+        ('Text Only', FunctionTransformer(text_only)),
+        #Sort Values
+        ('Sort Values', FunctionTransformer(sort_values))
+    ])
+>>>>>>> origin/marouan
     transformed_data = pipeline.fit_transform(df)
 
     return transformed_data

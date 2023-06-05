@@ -311,7 +311,11 @@ def check_synonyms(excel_file, df, column, threshold, process_all=False, word=No
 
 # LDA
 
+<<<<<<< HEAD
 def train_and_predict_lda(X, n_components=2, learning_decay=0.5, random_state=16):
+=======
+def train_and_predict_lda(X,column, n_components=3, learning_decay=0.5, random_state=16):
+>>>>>>> origin/marouan
     '''
     X - Dataframe with the clean_text column
     n_components - Preference to 2 or 3
@@ -321,17 +325,30 @@ def train_and_predict_lda(X, n_components=2, learning_decay=0.5, random_state=16
     from sklearn.feature_extraction.text import CountVectorizer
     import re
     from sklearn.model_selection import train_test_split
+<<<<<<< HEAD
 
     X['clean_text'] = X['clean_text'].str.replace(r'\d+', '', regex=True)
+=======
+    X['LDA_text']=X[column]
+    X['LDA_text'] = X['LDA_text'].str.replace(r'\d+', '', regex=True)
+>>>>>>> origin/marouan
 
 
     names = ['costa', 'silva', 'santos', 'ferreira', 'pereira', 'oliveira', 'rodrigues', 'maria', 'carolina', 'luísa', 'raquel', 'paula', 'joana', 'rita', 'manuel', 'joão', 'josé', 'francisco', 'antónio', 'luis', 'pedro']
     for name in names:
+<<<<<<< HEAD
         X['clean_text'] = X['clean_text'].str.replace(fr'\b{name}\b', '', regex=True, flags=re.IGNORECASE)
 
     months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"]
     for month in months:
         X['clean_text'] = X['clean_text'].str.replace(fr'\b{month}\b', '', regex=True, flags=re.IGNORECASE)
+=======
+        X['LDA_text'] = X['LDA_text'].str.replace(fr'\b{name}\b', '', regex=True, flags=re.IGNORECASE)
+
+    months = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"]
+    for month in months:
+        X['LDA_text'] = X['LDA_text'].str.replace(fr'\b{month}\b', '', regex=True, flags=re.IGNORECASE)
+>>>>>>> origin/marouan
     
     # split the data into training and test sets
     X_train, X_test = train_test_split(X, test_size=0.2, shuffle=False)
@@ -340,7 +357,11 @@ def train_and_predict_lda(X, n_components=2, learning_decay=0.5, random_state=16
     vectorizer = CountVectorizer()
     
     # vectorize the text data in the clean_text column of X_train
+<<<<<<< HEAD
     X_train_vectorized = vectorizer.fit_transform(X_train['clean_text'])
+=======
+    X_train_vectorized = vectorizer.fit_transform(X_train['LDA_text'])
+>>>>>>> origin/marouan
     
     # create and fit the LDA model
     lda = LatentDirichletAllocation(n_components=n_components, learning_decay=learning_decay, random_state=random_state)
@@ -354,7 +375,11 @@ def train_and_predict_lda(X, n_components=2, learning_decay=0.5, random_state=16
         X.loc[X_train.index, f'topic_{i}'] = train_topic_probs[:, i]
     
     # vectorize the text data in the clean_text column of X_test
+<<<<<<< HEAD
     X_test_vectorized = vectorizer.transform(X_test['clean_text'])
+=======
+    X_test_vectorized = vectorizer.transform(X_test['LDA_text'])
+>>>>>>> origin/marouan
     
     # predict the topic probabilities for the test data
     test_topic_probs = lda.transform(X_test_vectorized)
