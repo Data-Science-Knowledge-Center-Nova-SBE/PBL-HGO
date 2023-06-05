@@ -10,6 +10,8 @@ from src.pre_processing.features_creation.features_creation_nlp import *
 from src.pre_processing.features_creation.features_creation_transformed_nlp import *
 from src.pre_processing.features_creation.features_creation_bert import *
 from src.pre_processing.features_creation.features_creation_chisquared import *
+from src.modelling_pipelines.modelling_functions.xgboost import *
+
 
 def pre_process(df):
     #Additional Functions
