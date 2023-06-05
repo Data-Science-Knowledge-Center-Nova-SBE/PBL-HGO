@@ -1,7 +1,7 @@
 import mysql.connector
 import pandas as pd
-from Functions.AlertP1.data_cleaning import *
-from Functions.NLP.alertp1_nlp import *
+from src.pre_processing.data_cleaning import *
+from src.pre_processing.features_creation.features_creation_nlp import *
 
     #Login Credentials
 """
