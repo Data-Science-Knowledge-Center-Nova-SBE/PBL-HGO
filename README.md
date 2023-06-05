@@ -7,9 +7,11 @@
 
 ## Usage
 
-```sh
-All the necessary functions to run the model are available on the &#34;src&#34; folder. To run the final model the user should connect to the database via &#34;src/db/connection.py&#34; and run the &#34;final_model()&#34; function that can be found on &#34;src/modelling_pipelines/final_model_pipeline.py&#34;. For more a more in-depth look, the features creation functions are available under &#34;src/pre_processing&#34;. They are organized by category, following the different NLP analasys that were explored. Aditionnaly, some working notebooks with visual representions of the analysis are available under the &#34;notebooks&#34; folder. 
-```
+
+> All the necessary functions to run the model are available on the &#34;src&#34; folder. To run the final model the user should connect to the database via &#34;src/db/connection.py&#34; and run the &#34;final_model()&#34; function that can be found on &#34;src/modelling_pipelines/final_model_pipeline.py&#34;. 
+> For more a more in-depth look, the features creation functions are available under &#34;src/pre_processing&#34;. They are organized by category, following the different NLP analasys that were explored. 
+> Aditionnaly, some working notebooks with visual representions of the analysis are available under the &#34;notebooks&#34; folder. 
+
 
 ## Authors
 
