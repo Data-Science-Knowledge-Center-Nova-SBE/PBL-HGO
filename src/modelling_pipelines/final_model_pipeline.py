@@ -116,3 +116,11 @@ def pre_process(df):
     transformed_data = pipeline.fit_transform(df)
 
     return transformed_data
+
+def final_model(alertP1):
+    alertP1=pre_process(alertP1)
+    eliminate_cols=['ID_DOENTE','PROCESSO','COD_REFERENCIA','result','COD_PZ','COD_UNID_SAUDE_PROV','UNID_PROV','TIPO_UNID','COD_CTH_PRIOR','CTH_PRIOR','COD_MOTIVO_RECUSA','DES_MOTIVO_RECUSA','COD_ESPECIALIDADE','DES_ESPECIALIDADE','agrupadora','OUTRA_ENTIDADE','DATA_RECEPCAO','DATA_ENVIO','DATA_RETORNO','NUM_TAXA','ESTADO','DATA_MARCACAO','DATA_REALIZACAO','OBSERVACOES','Mês_entrada','Ano_entrada','trata data recusa','resume saída','mês_saida','ano_saida','Texto','clean_text_caveman','clean_text','chi_squared']    
+    X = alertP1.drop(eliminate_cols,axis=1)# Features
+    y = alertP1.result # Target variable
+    y_pred_train, y_pred_test, model_score, X_train, X_test, y_train, y_test = xgb_classifier(X,y)
+    return alertP1,y_pred_train, y_pred_test, model_score, X_train, X_test, y_train, y_test 
