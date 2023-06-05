@@ -1,6 +1,6 @@
-from Functions.NLP.alertp1_nlp import *
-from Functions.BERT.bert import *
-from Functions.NLP.TF_IDF import *
+from src.pre_processing.features_creation.features_creation_nlp import *
+from src.pre_processing.features_creation.features_creation_bert import *
+from src.pre_processing.features_creation.features_creation_tfidf import *
 
 ### NLP ###
 def lowering_text(alertP1):

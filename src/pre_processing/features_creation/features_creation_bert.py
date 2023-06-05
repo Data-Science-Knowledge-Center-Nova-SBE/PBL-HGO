@@ -4,7 +4,7 @@ from transformers import BertTokenizer, BertModel
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModel   # for BERT
-from Functions.NLP.data_with_nlp  import *
+from src.pre_processing.features_creation.features_creation_transformed_nlp  import *
 
 def bert_embedding(dataset, column, baseline_list, prefix, model_name='sentence-transformers/multi-qa-MiniLM-L6-cos-v1'):
 
