@@ -4,11 +4,7 @@ from transformers import BertTokenizer, BertModel
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModel   # for BERT
-<<<<<<< HEAD
-from Data_with_NLP import *
-=======
 from Functions.NLP.data_with_nlp  import *
->>>>>>> origin/marouan
 
 def bert_embedding(dataset, column, baseline_list, prefix, model_name='sentence-transformers/multi-qa-MiniLM-L6-cos-v1'):
 
@@ -165,23 +161,10 @@ def bert_split_referrals(data, reference, model_name = 'sentence-transformers/ms
     from sentence_transformers import SentenceTransformer
 
     # Exploding the referrals into sentences
-<<<<<<< HEAD
-    split_text_df = data[['COD_REFERENCIA', 'Texto', 'text_length']]
-    split_text_df = split_text_df[split_text_df['text_length'] > 0]
-    split_text_df['text_split'] = split_text_df['Texto'].apply(lambda x: x.split("."))
-    split_text_df =  split_text_df.explode('text_split')
-
-    # Performing preprocessing on text
-    lower_text(split_text_df,'text_split', 'text_split')
-    remove_stop_words(split_text_df,'text_split', 'text_split')
-    spacy_lemmatizer(split_text_df,'text_split', 'text_split')
-    
-=======
     split_text_df = data[['COD_REFERENCIA', 'clean_text', 'text_length']]
     split_text_df['text_split'] = split_text_df['clean_text'].apply(lambda x: x.split("."))
     split_text_df =  split_text_df.explode('text_split')
 
->>>>>>> origin/marouan
     desired_columns = []
 
     # Looping through the baseline list
