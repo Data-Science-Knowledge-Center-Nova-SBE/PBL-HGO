@@ -6,3 +6,6 @@
 *credentials.txt
 *credentials.csv
 
+# Large files
+src/transformers/results
+src/transformers/runs
